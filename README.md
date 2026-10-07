@@ -91,8 +91,9 @@ full 305 GiB dataset streams from disk on a 36 GB Mac. Needs `uv sync --extra to
 
 ```bash
 P=.venv/bin/python
-$P -m cmd_tcn.train --data-root ~/data/cmd --max-steps 500 --batch-size 256 --num-workers 4   # throughput probe
-$P -m cmd_tcn.train --data-root ~/data/cmd --epochs 1 --num-workers 4 --test-forward          # full pass + forward test
+$P -m cmd_tcn.train --data-root ~/data/cmd --epochs 1 --test-forward        # defaults: 512 ch, batch 1024, bf16, 8 workers
+$P -m cmd_tcn.train --data-root ~/data/cmd --max-steps 300                    # throughput probe
+$P -m cmd_tcn.train --data-root ~/data/cmd --epochs 1 --channels 128 --precision 32-true   # small fp32 variant
 $P -m cmd_tcn.train --help
 ```
 
