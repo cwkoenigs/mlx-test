@@ -21,6 +21,6 @@ while (($#)); do
 done
 case "$MODE" in
   single)  exec "$PY" -m mlx_train.train --config "$CFG" "$@" ;;
-  local)   exec "$ROOT/scripts/launch.sh" -n "$N" "${LAUNCH[@]}" -m mlx_train.train --config "$CFG" "$@" ;;
-  cluster) exec "$ROOT/scripts/launch.sh" "${LAUNCH[@]}" -m mlx_train.train --config "$CFG" "$@" ;;
+  local)   exec "$ROOT/scripts/launch.sh" -n "$N" ${LAUNCH[@]+"${LAUNCH[@]}"} -m mlx_train.train --config "$CFG" "$@" ;;
+  cluster) exec "$ROOT/scripts/launch.sh" ${LAUNCH[@]+"${LAUNCH[@]}"} -m mlx_train.train --config "$CFG" "$@" ;;
 esac

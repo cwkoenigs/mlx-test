@@ -22,7 +22,7 @@ while (($#)); do
   esac
 done
 log "mlx.distributed_config --hosts $HOSTS --over thunderbolt --backend $BACKEND ${EXTRA[*]:-} -> $OUT"
-"$ROOT/.venv/bin/mlx.distributed_config" --verbose --hosts "$HOSTS" --over thunderbolt --backend "$BACKEND" "${EXTRA[@]}" --output-hostfile "$OUT"
+"$ROOT/.venv/bin/mlx.distributed_config" --verbose --hosts "$HOSTS" --over thunderbolt --backend "$BACKEND" ${EXTRA[@]+"${EXTRA[@]}"} --output-hostfile "$OUT"
 echo; log "hostfile $OUT:"; cat "$OUT"
 cat <<'MSG'
 

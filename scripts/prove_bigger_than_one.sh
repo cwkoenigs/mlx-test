@@ -20,4 +20,4 @@ while (($#)); do
     *) break ;;
   esac
 done
-exec "$ROOT/scripts/launch.sh" "${LAUNCH[@]}" -m mlx_cluster.prove_bigger_than_one "$@"
+exec "$ROOT/scripts/launch.sh" ${LAUNCH[@]+"${LAUNCH[@]}"} -m mlx_cluster.prove_bigger_than_one "$@"

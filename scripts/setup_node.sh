@@ -17,7 +17,7 @@ uv python install 3.12 >/dev/null 2>&1 || true
 EXTRA=()
 [[ "$(uname -s)" == "Linux" ]] && EXTRA=(--extra cpu)   # CPU-only MLX off-Mac
 log "syncing the pinned environment (uv sync --frozen ${EXTRA[*]:-})"
-uv sync --frozen "${EXTRA[@]}"
+uv sync --frozen ${EXTRA[@]+"${EXTRA[@]}"}
 
 log "MLX sanity check + hardware record"
 "$PY" -m mlx_cluster.nodeinfo --check --write | tail -1

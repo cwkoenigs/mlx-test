@@ -23,4 +23,4 @@ else
   TARGET=(--hostfile "$HOSTFILE"); [[ -n "$BACKEND" ]] && TARGET+=(--backend "$BACKEND")
 fi
 log "mlx.launch ${TARGET[*]} --cwd $ROOT --python $PY -- -m ${MOD[*]}"
-exec "$MLX_LAUNCH" "${TARGET[@]}" "${ENVS[@]}" --cwd "$ROOT" --python "$PY" -- -m "${MOD[@]}"
+exec "$MLX_LAUNCH" "${TARGET[@]}" ${ENVS[@]+"${ENVS[@]}"} --cwd "$ROOT" --python "$PY" -- -m "${MOD[@]}"
