@@ -20,6 +20,12 @@ torch = ["torch>=2.5", "lightning>=2.4"]
 # Synthetic CMD array generator (scripts/generate_synthetic_cmd_arrays.py): parquet labels file.
 cmd = ["pyarrow>=17"]
 
+[dependency-groups]
+# Installed by a plain `uv sync` on the Macs (default group): the PyTorch/Lightning TCN and the
+# pyarrow the CMD generator needs. Linux keeps the lean MLX-only environment.
+mac = ["torch>=2.5; sys_platform == 'darwin'", "lightning>=2.4; sys_platform == 'darwin'", "pyarrow; sys_platform == 'darwin'"]
+
 [tool.uv]
 package = false
+default-groups = ["mac"]
 environments = ["sys_platform == 'darwin'", "sys_platform == 'linux'"]
