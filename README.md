@@ -79,6 +79,27 @@ run resumed with `--resume` is byte-identical to a clean run, as is chunked-then
 `structured` or `fast-io` value patterns, size/disk estimate with 15% headroom, and a validator that
 checks every rule in the prompt with `mmap_mode='r'`.
 
+## CMD temporal convolutional network (PyTorch Lightning)
+
+`cmd_tcn/` trains a TCN on the synthetic CMD arrays: five residual blocks with dilations 1, 2, 4, 8, 16,
+two causal dilated `Conv1d` layers per block (kernel 3, weight norm, dropout), receptive field 125 bins.
+Input is `X_seq` (105 x 324) plus the historical `enrollment_mask` as a 325th channel and `X_static`
+through a small projection; output is the 12 monthly allowed-cost targets `y`, trained with a masked
+Huber loss in `log1p` dollars (months with `outcome_enrollment_mask == 0` are not scored). The loader
+memory-maps the `.npy` files and reads **contiguous member blocks** (one block = one batch), so the
+full 305 GiB dataset streams from disk on a 36 GB Mac. Needs `uv sync --extra torch --extra cmd`.
+
+```bash
+P=.venv/bin/python
+$P -m cmd_tcn.train --data-root ~/data/cmd --max-steps 500 --batch-size 256 --num-workers 4   # throughput probe
+$P -m cmd_tcn.train --data-root ~/data/cmd --epochs 1 --num-workers 4 --test-forward          # full pass + forward test
+$P -m cmd_tcn.train --help
+```
+
+Each run writes `results/tcn/<run>.summary.json` (parameters, steps/s, members/s, GiB/s of `X_seq`
+read, peak MPS memory, val and forward-test metrics). `tests/selfcheck.sh` runs five CPU steps on the
+0.001-scale smoke data when Lightning is installed.
+
 ## Status
 
 Validated in a Linux CPU container with two local ring processes (`tests/selfcheck.sh`: training
