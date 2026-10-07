@@ -29,5 +29,7 @@ run "train cnn, single process"                   "$PY" -m mlx_train.train --con
 run "smoke test, 2 ranks ring"                    "$ROOT/scripts/launch.sh" -n 2 -m mlx_cluster.smoke --sizes-mib 1,8 --reps 2 --out-dir "$TMP/cluster"
 run "proof mechanics, 2 ranks (small model)"      "$ROOT/scripts/launch.sh" -n 2 -m mlx_cluster.prove_bigger_than_one --d-model 256 --n-heads 4 --seq-len 64 --batch 4 --split 3,2 --criterion none --steps 4 --out-dir "$TMP/proof"
 run "report generation"                           "$PY" -m mlx_train.report --benchmarks "$BENCH" --out-dir "$TMP"
+run "synthetic CMD generator, 0.001 scale"        "$PY" scripts/generate_synthetic_cmd_arrays.py --output-root "$TMP/cmd" --scale 0.001
+run "synthetic CMD validate"                      "$PY" scripts/generate_synthetic_cmd_arrays.py validate --output-root "$TMP/cmd"
 echo; echo "selfcheck: $pass passed, $fail failed"
 [[ $fail -eq 0 ]]
