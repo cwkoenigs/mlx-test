@@ -1,0 +1,11 @@
+# CNN baseline on synthetic 32x32 images (throughput in samples/sec).
+name: cnn
+model: {type: cnn, width: 64, n_classes: 10, image_size: 32, channels: 3}
+data: {type: images, seed: 1234}
+global_batch_size: 128
+steps: 200
+warmup_steps: 10
+lr: 1.0e-3
+compile: true
+log_every: 20
+skip_first: 10

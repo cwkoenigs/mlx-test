@@ -1,0 +1,10 @@
+# Fast functional check (seconds on CPU). Not a benchmark.
+name: tiny
+model: {type: transformer, n_layers: 2, d_model: 64, n_heads: 4, vocab_size: 256, seq_len: 64}
+data: {type: synthetic, n_samples: 4096, seed: 1234}
+global_batch_size: 8
+steps: 30
+warmup_steps: 3
+lr: 1.0e-3
+log_every: 10
+skip_first: 3

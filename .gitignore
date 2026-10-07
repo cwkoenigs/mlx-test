@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+# machine-specific; copy hosts.example.json -> hosts.json
+hosts.json
+hosts.*.json
+!hosts.example.json
+# generated test fixtures and checkpoints
+tests/tiny_model/
+*.safetensors
+results/**/*.tmp

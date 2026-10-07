@@ -1,0 +1,11 @@
+# ~10M parameter decoder-only transformer (Phase 1 / Phase 4 row "~10M").
+name: tf-10m
+model: {type: transformer, n_layers: 8, d_model: 320, n_heads: 5, vocab_size: 256, seq_len: 512}
+data: {type: synthetic, n_samples: 65536, seed: 1234}
+global_batch_size: 32
+steps: 200
+warmup_steps: 20
+lr: 6.0e-4
+compile: true
+log_every: 20
+skip_first: 10

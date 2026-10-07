@@ -1,0 +1,11 @@
+# ~500M parameter transformer. ~2 GB of float32 weights + 4 GB AdamW state.
+name: tf-500m
+model: {type: transformer, n_layers: 18, d_model: 1536, n_heads: 12, vocab_size: 256, seq_len: 512}
+data: {type: synthetic, n_samples: 65536, seed: 1234}
+global_batch_size: 8
+steps: 100
+warmup_steps: 10
+lr: 2.0e-4
+compile: true
+log_every: 10
+skip_first: 10
