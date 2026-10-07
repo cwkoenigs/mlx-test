@@ -1,0 +1,23 @@
+[project]
+name = "mlx-cluster"
+version = "0.1.0"
+description = "MLX deep learning (training + distributed) on a two-Mac Thunderbolt cluster"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "mlx==0.32.3",
+    "pyyaml>=6.0",
+    "numpy>=2.0",
+]
+
+[project.optional-dependencies]
+# Linux-only CPU build of MLX so the repo can be smoke-tested off-Mac (CI, cloud sessions).
+cpu = ["mlx-cpu==0.32.3; sys_platform == 'linux'"]
+# Optional Phase 5 (LoRA fine-tuning check with mlx-lm). Not needed for the core experiment.
+llm = ["mlx-lm==0.32.0"]
+# Optional PyTorch-on-MPS baseline (Phase 1 framework comparison).
+torch = ["torch>=2.5"]
+
+[tool.uv]
+package = false
+environments = ["sys_platform == 'darwin'", "sys_platform == 'linux'"]

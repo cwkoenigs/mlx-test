@@ -1,0 +1,14 @@
+# Same as 10m.yaml but rank 0 (first host in hosts.json, e.g. the Mac Studio) gets 2/3 of each
+# global batch and rank 1 gets 1/3, so the faster node is not idle waiting for the slower one.
+# Gradients are weighted by batch share, so the update equals the plain global-batch mean.
+name: tf-10m-hetero
+model: {type: transformer, n_layers: 8, d_model: 320, n_heads: 5, vocab_size: 256, seq_len: 512}
+data: {type: synthetic, n_samples: 65536, seed: 1234}
+global_batch_size: 33
+rank_batch_weights: [2, 1]
+steps: 200
+warmup_steps: 20
+lr: 6.0e-4
+compile: true
+log_every: 20
+skip_first: 10

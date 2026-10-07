@@ -1,0 +1,11 @@
+# ~100M parameter transformer.
+name: tf-100m
+model: {type: transformer, n_layers: 14, d_model: 768, n_heads: 12, vocab_size: 256, seq_len: 512}
+data: {type: synthetic, n_samples: 65536, seed: 1234}
+global_batch_size: 16
+steps: 200
+warmup_steps: 20
+lr: 3.0e-4
+compile: true
+log_every: 20
+skip_first: 10

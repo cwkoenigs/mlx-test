@@ -1,0 +1,4 @@
+[
+  {"ssh": "studio.local",  "ips": ["10.10.10.1"]},
+  {"ssh": "macbook.local", "ips": ["10.10.10.2"]}
+]
