@@ -4,9 +4,8 @@
 > Every list and number below was cross-checked: the seven Appendix C lists count out to exactly
 > 255 / 324 / 18 / 56 / 38 / 19 / 56 entries, and the Appendix A/B numbers reproduce the document's
 > own totals (code-ID directory 34.205 / 33.632 GiB, split totals 154.07 / 151.34 GiB).
-> One gap: the forward-test `outcome_months` list was cut off after `2024-09-01`; twelve months
-> `2024-01-01 .. 2024-12-01` are assumed. Implemented by `scripts/generate_synthetic_cmd_arrays.py`
-> (contract in `scripts/synthetic_cmd_spec.py`).
+> The forward-test `outcome_months` list runs `2024-01-01 .. 2024-12-01` and the document ends after
+> it. Implemented by `scripts/generate_synthetic_cmd_arrays.py` (contract in `scripts/synthetic_cmd_spec.py`).
 
 You are working in the `member-level-predict-deep-learning` repository on a Mac. Write Python code that produces entirely synthetic CMD arrays so I can experiment with model architecture, PyTorch loading, memory pressure, disk I/O, and Apple Silicon hardware optimization. This document is the complete input specification. You have no real array files, metadata files, external manifests, or attachments. Do not request or copy real member data.
 

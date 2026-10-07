@@ -39,7 +39,6 @@ SPLITS = {
         "partial_exposure_members": 117_136,
         "strat_new": 65_237,
         "strat_non_new": 782_331,
-        # The source photo shows 2024-01-01 .. 2024-09-01 before being cut off; 12 months assumed.
         "outcome_months": [f"2024-{m:02d}-01" for m in range(1, 13)],
         "plan_cat_vocab_sizes": {
             "MEMBER_GENDER": 4, "PRODUCT_MKT_BUSN_SEG_DESCR": 16, "PRODUCT_FULLY_SELF_INSURE_INDC": 3,
