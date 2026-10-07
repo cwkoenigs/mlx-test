@@ -55,6 +55,30 @@ steps run layer by layer with `mx.vjp` so only one layer's gradients exist at a 
 when the measured parameter bytes exceed the largest node, every node stays within its own RAM,
 and the loss decreases. The report lands in `results/bigger_than_one/proof-<ts>.md`.
 
+## Synthetic CMD arrays (separate workload)
+
+`scripts/generate_synthetic_cmd_arrays.py` implements the prompt in
+[`docs/synthetic_cmd_generator_prompt.md`](docs/synthetic_cmd_generator_prompt.md): entirely synthetic
+member-level CMD arrays (`train__CMD` 863,154 members, `one_year_forward_test__CMD` 847,568 members,
+~305 GiB at full scale) for model-architecture, loader, memory-pressure and disk-I/O experiments.
+It is standalone (numpy, plus pyarrow for the parquet labels: `uv sync --extra cmd`); copy it and
+`scripts/synthetic_cmd_spec.py` into the member-level repo's `scripts/` to use it there.
+
+```bash
+P=.venv/bin/python
+$P scripts/generate_synthetic_cmd_arrays.py --output-root /Volumes/data/cmd --dry-run --full   # plan + disk check
+$P scripts/generate_synthetic_cmd_arrays.py --output-root /Volumes/data/cmd                    # smoke run (--scale 0.001)
+$P scripts/generate_synthetic_cmd_arrays.py validate --output-root /Volumes/data/cmd            # contract checks
+$P scripts/generate_synthetic_cmd_arrays.py --output-root /Volumes/data/cmd --full --resume     # the real thing (hours)
+$P scripts/generate_synthetic_cmd_arrays.py --output-root /Volumes/data/cmd --full --stage-chunks --resume
+$P scripts/generate_synthetic_cmd_arrays.py reassemble --output-root /Volumes/data/cmd --split train__CMD
+```
+
+Bounded-memory sequential `.npy` writer, deterministic per-(split, file, block) seeds (an interrupted
+run resumed with `--resume` is byte-identical to a clean run, as is chunked-then-reassembled `X_seq`),
+`structured` or `fast-io` value patterns, size/disk estimate with 15% headroom, and a validator that
+checks every rule in the prompt with `mmap_mode='r'`.
+
 ## Status
 
 Validated in a Linux CPU container with two local ring processes (`tests/selfcheck.sh`: training
