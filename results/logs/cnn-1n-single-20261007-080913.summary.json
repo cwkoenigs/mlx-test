@@ -1,0 +1,77 @@
+{
+  "run_id": "cnn-1n-single-20261007-080913",
+  "name": "cnn",
+  "tag": "",
+  "framework": "mlx",
+  "mlx_version": "0.32.3",
+  "config": {
+    "name": "cnn",
+    "model": {
+      "type": "cnn",
+      "n_layers": 4,
+      "d_model": 256,
+      "n_heads": 4,
+      "d_ff": null,
+      "vocab_size": 256,
+      "seq_len": 256,
+      "n_classes": 10,
+      "image_size": 32,
+      "channels": 3,
+      "width": 64
+    },
+    "data": {
+      "type": "images",
+      "path": null,
+      "n_samples": 65536,
+      "seed": 1234
+    },
+    "global_batch_size": 128,
+    "rank_batch_weights": null,
+    "steps": 200,
+    "warmup_steps": 10,
+    "lr": 0.001,
+    "min_lr_ratio": 0.1,
+    "weight_decay": 0.1,
+    "grad_clip": 1.0,
+    "compile": true,
+    "dtype": "float32",
+    "seed": 0,
+    "log_every": 20,
+    "skip_first": 10,
+    "log_dir": "results/logs",
+    "benchmarks_file": "results/benchmarks.jsonl",
+    "checkpoint": null,
+    "all_reduce_size": 33554432
+  },
+  "params": 963466,
+  "param_bytes": 3853864,
+  "ranks": 1,
+  "backend": "single",
+  "hosts": [
+    "Clarks-Mac-Studio.local"
+  ],
+  "global_batch_size": 128,
+  "rank_batch_sizes": [
+    128
+  ],
+  "seq_len": null,
+  "compile": true,
+  "dtype": "float32",
+  "steps": 200,
+  "skip_first": 10,
+  "steps_per_sec": 110.77943424577657,
+  "samples_per_sec": 14179.767583459401,
+  "throughput_unit": "samples",
+  "wall_seconds": 2.581332833000033,
+  "first_loss": 2.3052406311035156,
+  "final_loss": 1.6018721282762272e-07,
+  "min_loss": 0.0,
+  "peak_mem_bytes_per_rank": [
+    634078792
+  ],
+  "init_check": {
+    "checksum_seed_init": -6.5514044761657715
+  },
+  "log": "results/logs/cnn-1n-single-20261007-080913.jsonl",
+  "timestamp": "20261007-080913"
+}

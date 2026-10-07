@@ -11,8 +11,8 @@
 
 Evaluate **MLX** as a deep learning framework (training, not just inference) on Apple Silicon, using:
 
-- **Node A:** MacBook Pro, M4 Pro (Thunderbolt 5)
-- **Node B:** Mac Studio (check the chip; M4 Max and M3 Ultra have Thunderbolt 5, M2 Ultra has Thunderbolt 4)
+- **Node A:** MacBook Pro, M2 Pro, 16 GB (Thunderbolt 4, no RDMA)
+- **Node B:** Mac Studio, M5 Max, 36 GB (Thunderbolt 5; link runs at TB4 speed, 40 Gb/s, because of Node A)
 
 The experiment answers three questions:
 
@@ -160,7 +160,7 @@ if `hosts.jaccl.json` exists, 2-node jaccl, then `scripts/report.sh` fills `resu
 What to expect, and what to check:
 
 - Gradient all-reduce runs **every step**, so the link speed dominates for small models. Plain TCP may show **no speedup or a slowdown**.
-- Training runs in lockstep, so the slower node (M4 Pro) sets the pace. Expect well under 2x even in the best case. `rank_batch_weights` gives each node a different per-rank batch size; document which split you used.
+- Training runs in lockstep, so the slower node (M2 Pro) sets the pace. Expect well under 2x even in the best case. `rank_batch_weights` gives each node a different per-rank batch size; document which split you used.
 - Larger models and larger per-step compute should amortize communication better.
 
 ## Phase 5: Fine-tuning check (optional)

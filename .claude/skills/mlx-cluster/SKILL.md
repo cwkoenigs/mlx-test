@@ -7,7 +7,7 @@ description: Set up, verify, benchmark and train with MLX on the two-Mac Thunder
 
 Everything here is deep learning in MLX on models **we build and train ourselves** (synthetic,
 reproducible data; no model downloads, no Hugging Face). Two machines: **Node A** MacBook Pro
-M4 Pro, **Node B** Mac Studio (chip unknown until `results/hardware/` says so).
+M2 Pro (16 GB, Thunderbolt 4, no RDMA), **Node B** Mac Studio M5 Max (36 GB). Link negotiates at 40 Gb/s; `ring` only.
 
 ## Locate the repo first
 
@@ -86,7 +86,7 @@ and appends a row to `results/benchmarks.jsonl`; `scripts/report.sh` rebuilds th
   `configs/10m-hetero.yaml` shows `rank_batch_weights` for giving the Studio a bigger share.
 - Gradient all-reduce happens every step (`nn.average_gradients`, 32 MiB buckets). Over plain
   TCP ring on Thunderbolt expect little or no speedup for ~10M models and better amortisation for
-  100M-500M. The slower node (M4 Pro) sets the pace. `jaccl` (RDMA) cuts latency a lot.
+  100M-500M. The slower node (M2 Pro) sets the pace. `jaccl` (RDMA) would cut latency a lot, but the M2 Pro is Thunderbolt 4 with no RDMA, so it is not available for this pair.
 - `init check` in the 2-node output records whether seeding alone gave identical parameters on
   both chips and confirms they are identical after the rank-0 broadcast (the run aborts if not).
 - Peak memory per rank is `mx.get_peak_memory()`; compare with the Metal working set in

@@ -37,6 +37,8 @@ DTYPES = {"float32": mx.float32, "bfloat16": mx.bfloat16, "float16": mx.float16}
 
 def rank_batch_sizes(global_batch: int, size: int, weights: list[float] | None) -> list[int]:
     """Split the global batch across ranks (optionally unevenly). Sum is exactly global_batch."""
+    if size == 1:
+        weights = None  # a single rank takes the whole batch; lets a hetero config run as its own 1-node baseline
     w = [float(x) for x in (weights or [1.0] * size)]
     if len(w) != size:
         raise ValueError(f"rank_batch_weights has {len(w)} entries but there are {size} ranks")

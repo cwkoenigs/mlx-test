@@ -111,7 +111,7 @@ def collect(with_mlx: bool = True) -> dict:
         info["mlx_memory_limit_bytes"] = int(mx.get_memory_limit())
         info["metal_available"] = bool(mx.metal.is_available())
         if info["metal_available"]:
-            info["metal_device_info"] = {k: v for k, v in mx.metal.device_info().items()}
+            info["metal_device_info"] = {k: v for k, v in (mx.device_info() if hasattr(mx, "device_info") else mx.metal.device_info()).items()}
             ws = info["metal_device_info"].get("max_recommended_working_set_size")
             info["gpu_working_set_bytes"] = int(ws) if ws else None
         else:
@@ -171,7 +171,7 @@ def to_markdown(info: dict) -> str:
             v = f"{int(v) / 2**30:.1f} GiB ({int(v)} bytes)"
         lines.append(f"| {label} | {v} |")
     if info.get("metal_device_info"):
-        lines += ["", "## mx.metal.device_info()", "", "```json", json.dumps(info["metal_device_info"], indent=2), "```"]
+        lines += ["", "## mx.device_info()", "", "```json", json.dumps(info["metal_device_info"], indent=2), "```"]
     if info.get("sanity"):
         lines += ["", "## Sanity check", "", "```json", json.dumps(info["sanity"], indent=2), "```"]
     return "\n".join(lines) + "\n"

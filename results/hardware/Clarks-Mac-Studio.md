@@ -19,7 +19,7 @@
     rdma_en9        	41bf9e42849fac05
     rdma_en3        	42bf9e42849fac05
     rdma_en4        	43bf9e42849fac05 |
-| Collected | 2026-10-07T07:52:32-0500 |
+| Collected | 2026-10-07T08:06:11-0500 |
 
 ## mx.metal.device_info()
 
@@ -39,7 +39,7 @@
 ```json
 {
   "matmul_ok": true,
-  "matmul_seconds": 0.0977,
+  "matmul_seconds": 0.0101,
   "matmul_result": 8589934592.0
 }
 ```

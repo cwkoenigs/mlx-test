@@ -1,7 +1,7 @@
 # RDMA over Thunderbolt: the `jaccl` backend (optional Phase 5)
 
 Requirements (mlx 0.32.3 docs): **macOS 26.2 or newer on both Macs**, **Thunderbolt 5 on both**
-(MacBook Pro M4 Pro: yes; Mac Studio: M4 Max / M3 Ultra yes, M2 Ultra no), a direct cable
+(this pair: MacBook Pro M2 Pro is Thunderbolt 4 and has no RDMA devices, so jaccl is NOT possible here; the Mac Studio M5 Max alone does), a direct cable
 (two nodes = a complete mesh). Check the Studio's chip in `results/hardware/` first.
 
 ## Enable RDMA once per machine (Recovery mode)

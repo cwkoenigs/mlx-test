@@ -1,0 +1,89 @@
+{
+  "run_id": "tf-10m-hetero3-ring-2n-ring-20261007-090037",
+  "name": "tf-10m-hetero3",
+  "tag": "ring",
+  "framework": "mlx",
+  "mlx_version": "0.32.3",
+  "config": {
+    "name": "tf-10m-hetero3",
+    "model": {
+      "type": "transformer",
+      "n_layers": 8,
+      "d_model": 320,
+      "n_heads": 5,
+      "d_ff": null,
+      "vocab_size": 256,
+      "seq_len": 512,
+      "n_classes": 10,
+      "image_size": 32,
+      "channels": 3,
+      "width": 32
+    },
+    "data": {
+      "type": "synthetic",
+      "path": null,
+      "n_samples": 65536,
+      "seed": 1234
+    },
+    "global_batch_size": 32,
+    "rank_batch_weights": [
+      3,
+      1
+    ],
+    "steps": 200,
+    "warmup_steps": 20,
+    "lr": 0.0006,
+    "min_lr_ratio": 0.1,
+    "weight_decay": 0.1,
+    "grad_clip": 1.0,
+    "compile": true,
+    "dtype": "float32",
+    "seed": 0,
+    "log_every": 20,
+    "skip_first": 10,
+    "log_dir": "results/logs",
+    "benchmarks_file": "results/benchmarks.jsonl",
+    "checkpoint": null,
+    "all_reduce_size": 33554432
+  },
+  "params": 9835840,
+  "param_bytes": 39343360,
+  "ranks": 2,
+  "backend": "ring",
+  "hosts": [
+    "Clarks-Mac-Studio.local",
+    "CLARKs-MacBook-Pro.local"
+  ],
+  "global_batch_size": 32,
+  "rank_batch_sizes": [
+    24,
+    8
+  ],
+  "seq_len": 512,
+  "compile": true,
+  "dtype": "float32",
+  "steps": 200,
+  "skip_first": 10,
+  "steps_per_sec": 7.0292483702812945,
+  "tokens_per_sec": 115167.20529868873,
+  "throughput_unit": "tokens",
+  "wall_seconds": 29.083752042000015,
+  "first_loss": 5.70458459854126,
+  "final_loss": 1.2557682991027832,
+  "min_loss": 1.2204465866088867,
+  "peak_mem_bytes_per_rank": [
+    5156761828,
+    2530037992
+  ],
+  "init_check": {
+    "checksum_seed_init": 5441.2529296875,
+    "seed_init_identical_across_ranks": true,
+    "checksums_after_broadcast": [
+      5441.2529296875,
+      5441.2529296875
+    ],
+    "identical_after_broadcast": true
+  },
+  "log": "results/logs/tf-10m-hetero3-ring-2n-ring-20261007-090037.jsonl",
+  "timestamp": "20261007-090037"
+}

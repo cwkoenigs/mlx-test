@@ -11,7 +11,7 @@ log "local: $(hostname) mlx/python = $LOCAL_VER, repo = $ROOT"
 FAIL=0
 while IFS=$'\t' read -r host ips; do
   printf '%-28s ' "$host"
-  if ! out="$(ssh -o BatchMode=yes -o ConnectTimeout=8 -o LogLevel=ERROR "$host" \
+  if ! out="$(ssh -n -o BatchMode=yes -o ConnectTimeout=8 -o LogLevel=ERROR "$host" \
         "cd '$ROOT' 2>/dev/null || { echo NO_REPO; exit 1; }; '$PY' -c 'import mlx.core as mx, platform; print(mx.__version__, platform.python_version())' 2>/dev/null || echo NO_VENV" 2>&1)"; then
     echo "FAIL ssh/repo: $out"; FAIL=1; continue
   fi

@@ -12,7 +12,7 @@ if ! command -v uv >/dev/null 2>&1; then
   export PATH="$HOME/.local/bin:$PATH"
 fi
 log "uv $(uv --version)"
-uv python install 3.12 >/dev/null 2>&1 || true
+uv python install "$(cat .python-version)" >/dev/null 2>&1 || true   # pinned so both Macs resolve the same interpreter
 
 EXTRA=()
 [[ "$(uname -s)" == "Linux" ]] && EXTRA=(--extra cpu)   # CPU-only MLX off-Mac

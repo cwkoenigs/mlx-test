@@ -1,7 +1,7 @@
 # mlx-test: MLX deep learning on a two-Mac Thunderbolt cluster
 
 Train and benchmark deep learning models in [MLX](https://github.com/ml-explore/mlx) on a
-MacBook Pro (M4 Pro) and a Mac Studio connected by Thunderbolt, and **prove that the two Macs
+MacBook Pro (M2 Pro, 16 GB) and a Mac Studio (M5 Max, 36 GB) connected by Thunderbolt, and **prove that the two Macs
 together hold and train a model larger than either Mac's memory**. Everything is built and
 trained from scratch on synthetic, reproducible data (no pretrained models, no downloads).
 

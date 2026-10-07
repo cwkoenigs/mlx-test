@@ -1,0 +1,13 @@
+# Same as 10m.yaml but rank 0 (Mac Studio) gets 3/4 of each global batch (24:8). The measured
+# per-sample speed ratio M5 Max : M2 Pro is ~3.3, so this is the split where neither node waits.
+name: tf-10m-hetero3
+model: {type: transformer, n_layers: 8, d_model: 320, n_heads: 5, vocab_size: 256, seq_len: 512}
+data: {type: synthetic, n_samples: 65536, seed: 1234}
+global_batch_size: 32
+rank_batch_weights: [3, 1]
+steps: 200
+warmup_steps: 20
+lr: 6.0e-4
+compile: true
+log_every: 20
+skip_first: 10

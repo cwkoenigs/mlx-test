@@ -1,0 +1,2 @@
+{"step": 0, "loss": 5.696371078491211, "lr": 0.0, "step_time_s": 4.598740625000119, "steps_per_sec": 0.21745083742355534, "tokens_per_sec": 890.6786300868827, "peak_mem_bytes": 9412819108, "active_mem_bytes": 6125439124}
+{"step": 1, "loss": 5.700157642364502, "lr": 1.9999999494757503e-05, "step_time_s": 5.020441458000278, "steps_per_sec": 0.19918567089482925, "tokens_per_sec": 815.8645079852206, "peak_mem_bytes": 13398366468, "active_mem_bytes": 6125439240}
