@@ -1,37 +1,37 @@
 {
-  "hostname": "CLARKs-MacBook-Pro.local",
+  "hostname": "Clarks-MacBook-Pro.local",
   "platform": "darwin",
   "machine": "arm64",
   "python": "3.12.15",
-  "python_executable": "/Users/clarkkoenigs/code/mlx-test/.venv/bin/python",
-  "ram_bytes": 17179869184,
-  "collected_at": "2026-10-07T08:18:09-0500",
-  "chip": "Apple M2 Pro",
-  "macos_version": "27.2",
-  "macos_build": "26B5091g",
-  "cpu_cores": 10,
-  "gpu_cores": 16,
+  "python_executable": "/Users/clarkkoenigs/Developer/mlx-test/.venv/bin/python",
+  "ram_bytes": 51539607552,
+  "collected_at": "2026-10-08T07:07:45-0500",
+  "chip": "Apple M5 Pro",
+  "macos_version": "27.0.1",
+  "macos_build": "26A434",
+  "cpu_cores": 18,
+  "gpu_cores": 20,
   "thunderbolt_ips": {
-    "bridge0": "169.254.141.243"
+    "bridge0": "169.254.61.39"
   },
-  "rdma_devices": "device          \t   node GUID\n    ------          \t----------------",
+  "rdma_devices": "device          \t   node GUID\n    ------          \t----------------\n    rdma_en1        \t8097a52d8465ac05\n    rdma_en6        \t8197a52d8465ac05\n    rdma_en2        \t8297a52d8465ac05",
   "mlx_version": "0.32.3",
   "mlx_lm_version": null,
   "mlx_default_device": "Device(gpu, 0)",
-  "mlx_memory_limit_bytes": 16320875724,
+  "mlx_memory_limit_bytes": 48962627174,
   "metal_available": true,
   "metal_device_info": {
-    "device_name": "Apple M2 Pro",
-    "max_recommended_working_set_size": 12713115648,
-    "memory_size": 17179869184,
-    "architecture": "applegpu_g14s",
-    "max_buffer_length": 9534832640,
+    "device_name": "Apple M5 Pro",
+    "max_recommended_working_set_size": 40200896512,
+    "memory_size": 51539607552,
+    "architecture": "applegpu_g17s",
+    "max_buffer_length": 30150672384,
     "resource_limit": 499000
   },
-  "gpu_working_set_bytes": 12713115648,
+  "gpu_working_set_bytes": 40200896512,
   "sanity": {
     "matmul_ok": true,
-    "matmul_seconds": 0.0201,
+    "matmul_seconds": 0.1028,
     "matmul_result": 8589934592.0
   }
 }
