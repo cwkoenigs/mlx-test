@@ -16,7 +16,7 @@ while (($#)); do
   esac
 done
 case "$MODE" in
-  single)  exec "$PY" -m cmd_tcn_mlx.train ${ARGS[@]+"${ARGS[@]}"} ;;
+  single)  exec "$PY_NOSLEEP" -m cmd_tcn_mlx.train ${ARGS[@]+"${ARGS[@]}"} ;;
   local)   exec "$ROOT/scripts/launch.sh" -n "$N" -m cmd_tcn_mlx.train ${ARGS[@]+"${ARGS[@]}"} ;;
   cluster) [[ -f "$HF" ]] || die "no hostfile at $HF"; exec "$ROOT/scripts/launch.sh" --hostfile "$HF" -m cmd_tcn_mlx.train ${ARGS[@]+"${ARGS[@]}"} ;;
 esac

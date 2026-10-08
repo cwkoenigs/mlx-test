@@ -5,6 +5,7 @@ set -euo pipefail
 # mlx.launch's --cwd works on both even when the real checkout paths differ.
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -L)"
 PY="$ROOT/.venv/bin/python"
+PY_NOSLEEP="$ROOT/scripts/python_nosleep.sh"   # same python, keeps the Mac awake for the run
 MLX_LAUNCH="$ROOT/.venv/bin/mlx.launch"
 HOSTFILE="${HOSTFILE:-$ROOT/hosts.json}"
 

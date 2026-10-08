@@ -22,5 +22,5 @@ else
   [[ -f "$HOSTFILE" ]] || die "no hostfile at $HOSTFILE (scripts/make_hostfile.sh) - or use -n 2 for a local run"
   TARGET=(--hostfile "$HOSTFILE"); [[ -n "$BACKEND" ]] && TARGET+=(--backend "$BACKEND")
 fi
-log "mlx.launch ${TARGET[*]} --cwd $ROOT --python $PY -- -m ${MOD[*]}"
-exec "$MLX_LAUNCH" "${TARGET[@]}" ${ENVS[@]+"${ENVS[@]}"} --cwd "$ROOT" --python "$PY" -- -m "${MOD[@]}"
+log "mlx.launch ${TARGET[*]} --cwd $ROOT --python $PY_NOSLEEP -- -m ${MOD[*]}"
+exec "$MLX_LAUNCH" "${TARGET[@]}" ${ENVS[@]+"${ENVS[@]}"} --cwd "$ROOT" --python "$PY_NOSLEEP" -- -m "${MOD[@]}"
