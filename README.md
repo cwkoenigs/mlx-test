@@ -101,6 +101,25 @@ Each run writes `results/tcn/<run>.summary.json` (parameters, steps/s, members/s
 read, peak MPS memory, val and forward-test metrics). `tests/selfcheck.sh` runs five CPU steps on the
 0.001-scale smoke data when Lightning is installed.
 
+### The same TCN in MLX, on one Mac or both
+
+`cmd_tcn_mlx/` is the PyTorch TCN ported layer for layer to MLX (`cmd_tcn_mlx.parity` copies the
+torch weights across and checks the outputs agree), with the same block-streaming loader in plain
+numpy and the data-parallel machinery from `mlx_train` (gradient averaging every step over jaccl or
+ring, uneven batch split for the faster Mac). Both Macs need the data at the same path.
+
+```bash
+./scripts/run_tcn.sh --data-root ~/data/cmd --epochs 1 --test-forward                        # this Mac
+./scripts/run_tcn.sh --cluster --data-root ~/data/cmd --epochs 1 --test-forward --rank-weights 2,1   # both Macs over jaccl
+./scripts/run_tcn.sh --cluster --hostfile hosts.json --data-root ~/data/cmd --epochs 1       # both Macs over ring
+.venv/bin/python -m cmd_tcn_mlx.parity --data-root ~/data/cmd                                 # torch == mlx check
+.venv/bin/python -m cmd_tcn_mlx.report                                                        # results/tcn/comparison.md
+```
+
+Every run prints each `--log-every` step (loss, lr, steps/s, members/s, GiB/s of `X_seq`, peak
+memory) and writes `results/tcn/<run>.summary.json` in the same schema as the PyTorch run, so
+`cmd_tcn_mlx.report` puts PyTorch-on-one-Mac, MLX-on-one-Mac and MLX-on-two-Macs side by side.
+
 ## Status
 
 Validated in a Linux CPU container with two local ring processes (`tests/selfcheck.sh`: training

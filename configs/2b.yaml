@@ -1,0 +1,12 @@
+# ~2B parameter transformer in bfloat16 (float32 would not fit one 48 GB Mac with Adam state).
+name: tf-2b
+model: {type: transformer, n_layers: 26, d_model: 2560, n_heads: 20, vocab_size: 256, seq_len: 512}
+data: {type: synthetic, n_samples: 65536, seed: 1234}
+global_batch_size: 4
+steps: 40
+warmup_steps: 4
+lr: 1.0e-4
+dtype: bfloat16
+compile: true
+log_every: 1
+skip_first: 5

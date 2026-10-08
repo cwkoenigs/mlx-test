@@ -27,7 +27,9 @@ while IFS=$'\t' read -r host ips; do
   echo "ok  mlx/python $out  ips:${pingres:- (none listed)}"
 done < <("$PY" -c '
 import json, sys
-for h in json.load(open(sys.argv[1])):
+d = json.load(open(sys.argv[1]))
+hosts = d["hosts"] if isinstance(d, dict) else d   # helper writes {"backend","envs","hosts"}; hand-written files are a list
+for h in hosts:
     print(h["ssh"] + "\t" + " ".join(h.get("ips", [])))' "$HF")
 if (( FAIL )); then die "cluster check FAILED"; fi
 log "cluster check OK - next: ./scripts/run_smoke.sh"

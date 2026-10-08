@@ -1,0 +1,11 @@
+# ~1B parameter transformer, float32. Params + grads + AdamW state ~16 GiB, plus activations.
+name: tf-1b
+model: {type: transformer, n_layers: 24, d_model: 1920, n_heads: 16, vocab_size: 256, seq_len: 512}
+data: {type: synthetic, n_samples: 65536, seed: 1234}
+global_batch_size: 4
+steps: 60
+warmup_steps: 6
+lr: 1.5e-4
+compile: true
+log_every: 1
+skip_first: 5

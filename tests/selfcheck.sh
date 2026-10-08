@@ -31,6 +31,8 @@ run "proof mechanics, 2 ranks (small model)"      "$ROOT/scripts/launch.sh" -n 2
 run "report generation"                           "$PY" -m mlx_train.report --benchmarks "$BENCH" --out-dir "$TMP"
 run "synthetic CMD generator, 0.001 scale"        "$PY" scripts/generate_synthetic_cmd_arrays.py --output-root "$TMP/cmd" --scale 0.001
 run "synthetic CMD validate"                      "$PY" scripts/generate_synthetic_cmd_arrays.py validate --output-root "$TMP/cmd"
+run "CMD TCN (MLX), 5 steps single process"       "$PY" -m cmd_tcn_mlx.train --data-root "$TMP/cmd" --max-steps 5 --batch-size 32 --channels 64 --val-batches 1 --test-forward --test-batches 1 --out-dir "$TMP/tcn"
+run "CMD TCN (MLX), 2 ranks ring, weights 2,1"    "$ROOT/scripts/launch.sh" -n 2 -m cmd_tcn_mlx.train --data-root "$TMP/cmd" --max-steps 4 --batch-size 48 --rank-weights 2,1 --channels 64 --val-batches 1 --out-dir "$TMP/tcn"
 if "$PY" -c "import lightning" >/dev/null 2>&1; then
 run "CMD TCN (Lightning), 5 steps on 0.001 scale" "$PY" -m cmd_tcn.train --data-root "$TMP/cmd" --max-steps 5 --batch-size 32 --channels 64 --num-workers 0 --precision 32-true --val-batches 2 --warmup-steps 1 --accelerator cpu --out-dir "$TMP/tcn"
 else

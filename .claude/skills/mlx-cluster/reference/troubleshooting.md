@@ -17,3 +17,7 @@
 | Proof: loss does not decrease | Lower `--lr` (0.05 default for float32 SGD on the fixed batch), or use `--dtype float32` if you tried bfloat16. 1-2 steps are not enough; default is 4. |
 | `mx.compile` errors in train.py | Run with `-- --no-compile` to confirm, then report the config. Compile is a speed option only. |
 | Metal: `[metal] Attempting to allocate ... which is greater than the maximum allowed buffer size` | One array exceeds Metal's max buffer; reduce `d_model` or vocab in the proof (per-layer matrices are d x 2.7d). |
+| `mlx.distributed_config` dies with `EOFError: EOF when reading a line` | It waits for Enter after printing each node's setup commands; `scripts/make_hostfile.sh` now pipes `yes ''` into it. |
+| jaccl: `No IPv4-mapped GID for this device ... assign a link-local address` | The RDMA interface (e.g. `en2`) has no IPv4 address of its own (being a `bridge0` member is not enough). Run the helper's `sudo ifconfig bridge0 down; sudo ifconfig en2 inet 192.168.0.X netmask 255.255.255.252` on both Macs and put those IPs in the hostfile. Not persistent across reboots. |
+| `No route to host` between the 192.168.0.x addresses although both `en2` are up | A `route add -host <peer> -interface en2` entry pins the peer to your *own* MAC. `sudo route delete -host <peer>` on each Mac; the `/30` route from `ifconfig` is all that is needed. |
+| `check_cluster.sh` prints a Python `TypeError` and then "OK" | Fixed: it now reads both the helper's `{"backend","envs","hosts":[...]}` form and the plain list form. |

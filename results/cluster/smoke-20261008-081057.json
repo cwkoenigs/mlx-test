@@ -1,0 +1,102 @@
+{
+  "ranks": 2,
+  "backend": "ring",
+  "nodes": [
+    {
+      "hostname": "Clarks-Mac-Studio.local",
+      "platform": "darwin",
+      "machine": "arm64",
+      "python": "3.12.15",
+      "python_executable": "/Users/clarkkoenigs/Developer/mlx-test/.venv/bin/python",
+      "ram_bytes": 51539607552,
+      "collected_at": "2026-10-08T08:10:57-0500",
+      "chip": "Apple M5 Max",
+      "macos_version": "27.0.1",
+      "macos_build": "26A434",
+      "cpu_cores": 18,
+      "gpu_cores": 40,
+      "thunderbolt_ips": {
+        "bridge0": "169.254.84.32",
+        "en1": "10.120.49.70",
+        "en5": "169.254.47.144"
+      },
+      "rdma_devices": "device          \t   node GUID\n    ------          \t----------------\n    rdma_en2        \t0042c4dff605ac05\n    rdma_en9        \t0142c4dff605ac05\n    rdma_en3        \t0242c4dff605ac05\n    rdma_en4        \t0342c4dff605ac05",
+      "mlx_version": "0.32.3",
+      "mlx_lm_version": null,
+      "mlx_default_device": "Device(gpu, 0)",
+      "mlx_memory_limit_bytes": 48962627174,
+      "metal_available": true,
+      "metal_device_info": {
+        "device_name": "Apple M5 Max",
+        "max_recommended_working_set_size": 40200896512,
+        "memory_size": 51539607552,
+        "architecture": "applegpu_g17s",
+        "max_buffer_length": 30150672384,
+        "resource_limit": 499000
+      },
+      "gpu_working_set_bytes": 40200896512
+    },
+    {
+      "hostname": "Clarks-MacBook-Pro.local",
+      "platform": "darwin",
+      "machine": "arm64",
+      "python": "3.12.15",
+      "python_executable": "/Users/clarkkoenigs/Developer/mlx-test/.venv/bin/python",
+      "ram_bytes": 51539607552,
+      "collected_at": "2026-10-08T08:10:57-0500",
+      "chip": "Apple M5 Pro",
+      "macos_version": "27.0.1",
+      "macos_build": "26A434",
+      "cpu_cores": 18,
+      "gpu_cores": 20,
+      "thunderbolt_ips": {
+        "bridge0": "169.254.61.39"
+      },
+      "rdma_devices": "device          \t   node GUID\n    ------          \t----------------\n    rdma_en1        \t8097a52d8465ac05\n    rdma_en6        \t8197a52d8465ac05\n    rdma_en2        \t8297a52d8465ac05",
+      "mlx_version": "0.32.3",
+      "mlx_lm_version": null,
+      "mlx_default_device": "Device(gpu, 0)",
+      "mlx_memory_limit_bytes": 48962627174,
+      "metal_available": true,
+      "metal_device_info": {
+        "device_name": "Apple M5 Pro",
+        "max_recommended_working_set_size": 40200896512,
+        "memory_size": 51539607552,
+        "architecture": "applegpu_g17s",
+        "max_buffer_length": 30150672384,
+        "resource_limit": 499000
+      },
+      "gpu_working_set_bytes": 40200896512
+    }
+  ],
+  "all_sum_ok": true,
+  "all_sum_latency_us": {
+    "default_stream": 138.99415998821496,
+    "cpu_stream": 123.33500000750064
+  },
+  "bandwidth": [
+    {
+      "mib": 1.0,
+      "all_sum_s": 0.00044200840002304174,
+      "all_sum_gbps": 2.3722988068673314,
+      "all_gather_s": 0.0004149794999648293,
+      "all_gather_gbps": 2.526813975362325
+    },
+    {
+      "mib": 16.0,
+      "all_sum_s": 0.002668274999996356,
+      "all_sum_gbps": 6.28766375280768,
+      "all_gather_s": 0.002306104000126652,
+      "all_gather_gbps": 7.275134165275542
+    },
+    {
+      "mib": 128.0,
+      "all_sum_s": 0.020386116599911474,
+      "all_sum_gbps": 6.583781042466069,
+      "all_gather_s": 0.019423332999849663,
+      "all_gather_gbps": 6.91012855522988
+    }
+  ],
+  "pingpong_1mib_roundtrip_ms": 0.3650312500212749,
+  "failures": []
+}

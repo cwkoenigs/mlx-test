@@ -1,13 +1,16 @@
 ---
 name: mlx-cluster
-description: Set up, verify, benchmark and train with MLX on the two-Mac Thunderbolt cluster in this repo (MacBook Pro M4 Pro + Mac Studio). Use when the user mentions MLX, mlx.launch, Thunderbolt bridge, hosts.json, ring/jaccl/RDMA, distributed or data-parallel training on Macs, the benchmark matrix, results/SUMMARY.md, or the proof that a model bigger than one Mac loads and trains across both. Covers Phases 0-4 of docs/MLX_DEEP_LEARNING.md end to end.
+description: Set up, verify, benchmark and train with MLX on the two-Mac Thunderbolt cluster in this repo (MacBook Pro M5 Pro + Mac Studio M5 Max, jaccl RDMA or ring). Use when the user mentions MLX, mlx.launch, Thunderbolt bridge, hosts.json, ring/jaccl/RDMA, distributed or data-parallel training on Macs, the benchmark matrix, results/SUMMARY.md, or the proof that a model bigger than one Mac loads and trains across both. Covers Phases 0-4 of docs/MLX_DEEP_LEARNING.md end to end.
 ---
 
 # MLX two-Mac cluster
 
 Everything here is deep learning in MLX on models **we build and train ourselves** (synthetic,
-reproducible data; no model downloads, no Hugging Face). Two machines: **Node A** MacBook Pro
-M2 Pro (16 GB, Thunderbolt 4, no RDMA), **Node B** Mac Studio M5 Max (36 GB). Link negotiates at 40 Gb/s; `ring` only.
+reproducible data; no model downloads, no Hugging Face). Two machines (since 2026-10-08):
+**Node A** MacBook Pro M5 Pro (20 GPU cores, 48 GB), **Node B** Mac Studio M5 Max (40 GPU cores,
+48 GB), both macOS 27.0.1 with RDMA enabled; Thunderbolt 5 link at 80 Gb/s. Backends: `jaccl`
+(RDMA, `hosts.jaccl.json`) and `ring` (TCP, `hosts.json`). The Studio is rank 0. The 2026-10-07
+results in `results/` came from the previous pair (M2 Pro 16 GB + M5 Max 36 GB, ring only).
 
 ## Locate the repo first
 
@@ -60,6 +63,16 @@ Practicalities:
 - Nodes are listed in `hosts.json` order; put the Mac Studio first (rank 0) so it gets the
   bigger share and the embedding.
 
+## Denis's data on both Macs (the CMD TCN)
+
+`cmd_tcn/` is the PyTorch Lightning TCN (one Mac only; PyTorch cannot span two Macs' GPUs).
+`cmd_tcn_mlx/` is the same network in MLX and runs data-parallel over the link:
+`./scripts/run_tcn.sh --cluster --data-root ~/data/cmd --epochs 1 --test-forward --rank-weights 2,1`
+(`--rank-weights 2,1` gives the Studio two thirds of each batch). The data must exist at the same
+path on both Macs (`scripts/generate_synthetic_cmd_arrays.py --output-root ~/data/cmd --full`
+on each; deterministic, ~13 min). `cmd_tcn_mlx.parity` proves torch and MLX agree;
+`cmd_tcn_mlx.report` builds `results/tcn/comparison.md`.
+
 ## Commands cheat sheet
 
 ```bash
@@ -85,8 +98,10 @@ and appends a row to `results/benchmarks.jsonl`; `scripts/report.sh` rebuilds th
 - Keep the **global batch** fixed between 1-node and 2-node runs so loss curves are comparable.
   `configs/10m-hetero.yaml` shows `rank_batch_weights` for giving the Studio a bigger share.
 - Gradient all-reduce happens every step (`nn.average_gradients`, 32 MiB buckets). Over plain
-  TCP ring on Thunderbolt expect little or no speedup for ~10M models and better amortisation for
-  100M-500M. The slower node (M2 Pro) sets the pace. `jaccl` (RDMA) would cut latency a lot, but the M2 Pro is Thunderbolt 4 with no RDMA, so it is not available for this pair.
+  TCP ring expect little or no speedup for ~10M models and better amortisation for 100M-500M; the
+  slower node (M5 Pro, half the GPU cores) sets the pace unless `rank_batch_weights` skews the
+  batch to the Studio. `jaccl` cuts collective latency ~7x (139 -> 21 us) and raises bandwidth
+  (6.6 -> 9.3 GB/s); see `reference/rdma-jaccl.md`.
 - `init check` in the 2-node output records whether seeding alone gave identical parameters on
   both chips and confirms they are identical after the rank-0 broadcast (the run aborts if not).
 - Peak memory per rank is `mx.get_peak_memory()`; compare with the Metal working set in

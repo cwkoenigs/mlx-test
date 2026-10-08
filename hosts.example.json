@@ -1,4 +1,8 @@
-[
-  {"ssh": "169.254.6.245",   "ips": ["169.254.6.245"]},
-  {"ssh": "169.254.141.243", "ips": ["169.254.141.243"]}
-]
+{
+    "backend": "jaccl",
+    "envs": [],
+    "hosts": [
+        {"ssh": "Clarks-Mac-Studio.local",  "ips": ["192.168.0.1"], "rdma": [null, "rdma_en2"]},
+        {"ssh": "Clarks-MacBook-Pro.local", "ips": ["192.168.0.2"], "rdma": ["rdma_en2", null]}
+    ]
+}
