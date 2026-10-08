@@ -1,0 +1,86 @@
+{
+  "run_id": "tcn-mlx-2n-jaccl-20261008-085606",
+  "framework": "mlx",
+  "mlx": "0.32.3",
+  "hosts": [
+    "Clarks-Mac-Studio.local",
+    "Clarks-MacBook-Pro.local"
+  ],
+  "ranks": 2,
+  "backend": "jaccl",
+  "device": "Device(gpu, 0)",
+  "config": {
+    "data_root": "/Users/clarkkoenigs/data/cmd",
+    "batch_size": 1024,
+    "rank_weights": "2,1",
+    "max_steps": 674,
+    "epochs": 1,
+    "limit_members": null,
+    "val_fraction": 0.2,
+    "val_batches": 20,
+    "test_forward": true,
+    "test_batches": 0,
+    "channels": 512,
+    "kernel": 3,
+    "dilations": [
+      1,
+      2,
+      4,
+      8,
+      16
+    ],
+    "dropout": 0.1,
+    "lr": 0.001,
+    "weight_decay": 0.01,
+    "warmup_steps": 50,
+    "dtype": "float32",
+    "compile": true,
+    "prefetch": 4,
+    "all_reduce_size": 33554432,
+    "seed": 0,
+    "log_every": 1,
+    "out_dir": "results/tcn",
+    "name": "tcn-mlx",
+    "global_batch": 1024,
+    "rank_batch_sizes": [
+      683,
+      341
+    ],
+    "precision": "float32"
+  },
+  "params": 7921420,
+  "receptive_field": 125,
+  "train_members": 690176,
+  "val_members": 172723,
+  "steps_per_epoch": 674,
+  "fit_wall_s": 238.9400532919999,
+  "measured_steps": 669,
+  "wall_s": 380.55880350000007,
+  "steps_per_sec": 1.757941200800522,
+  "members_per_sec": 1800.1317896197345,
+  "peak_device_bytes": 9405264360,
+  "peak_per_rank": [
+    {
+      "host": "Clarks-Mac-Studio.local",
+      "peak": 9405264360
+    },
+    {
+      "host": "Clarks-MacBook-Pro.local",
+      "peak": 5288311864
+    }
+  ],
+  "gib_per_sec_x_seq": 0.228138578991828,
+  "metrics": {
+    "val/loss": 1.1777678763011197,
+    "val/mae_log1p": 1.5583515519287443,
+    "val/mae_usd": 478.1617176312943,
+    "val/blocks_per_rank": 20,
+    "train/loss_epoch": 1.2241814884658384
+  },
+  "test_metrics": {
+    "test/loss": 1.1734982516548065,
+    "test/mae_log1p": 1.5542367291716006,
+    "test/mae_usd": 479.47011376550097,
+    "test/blocks_per_rank": 828
+  }
+}

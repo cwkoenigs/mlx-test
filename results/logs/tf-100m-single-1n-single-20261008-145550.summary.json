@@ -1,0 +1,77 @@
+{
+  "run_id": "tf-100m-single-1n-single-20261008-145550",
+  "name": "tf-100m",
+  "tag": "single",
+  "framework": "mlx",
+  "mlx_version": "0.32.3",
+  "config": {
+    "name": "tf-100m",
+    "model": {
+      "type": "transformer",
+      "n_layers": 14,
+      "d_model": 768,
+      "n_heads": 12,
+      "d_ff": null,
+      "vocab_size": 256,
+      "seq_len": 512,
+      "n_classes": 10,
+      "image_size": 32,
+      "channels": 3,
+      "width": 32
+    },
+    "data": {
+      "type": "synthetic",
+      "path": null,
+      "n_samples": 65536,
+      "seed": 1234
+    },
+    "global_batch_size": 16,
+    "rank_batch_weights": null,
+    "steps": 200,
+    "warmup_steps": 20,
+    "lr": 0.0003,
+    "min_lr_ratio": 0.1,
+    "weight_decay": 0.1,
+    "grad_clip": 1.0,
+    "compile": true,
+    "dtype": "float32",
+    "seed": 0,
+    "log_every": 20,
+    "skip_first": 10,
+    "log_dir": "results/logs",
+    "benchmarks_file": "results/benchmarks.jsonl",
+    "checkpoint": null,
+    "all_reduce_size": 33554432
+  },
+  "params": 99505920,
+  "param_bytes": 398023680,
+  "ranks": 1,
+  "backend": "single",
+  "hosts": [
+    "Clarks-Mac-Studio.local"
+  ],
+  "global_batch_size": 16,
+  "rank_batch_sizes": [
+    16
+  ],
+  "seq_len": 512,
+  "compile": true,
+  "dtype": "float32",
+  "steps": 200,
+  "skip_first": 10,
+  "steps_per_sec": 3.5059865484711397,
+  "tokens_per_sec": 28721.041805075576,
+  "throughput_unit": "tokens",
+  "wall_seconds": 57.68474562500023,
+  "first_loss": 5.715439796447754,
+  "final_loss": 1.2474113702774048,
+  "min_loss": 1.1918799877166748,
+  "peak_mem_bytes_per_rank": [
+    13390660816
+  ],
+  "init_check": {
+    "checksum_seed_init": 22248.5078125
+  },
+  "log": "results/logs/tf-100m-single-1n-single-20261008-145550.jsonl",
+  "timestamp": "20261008-145550"
+}

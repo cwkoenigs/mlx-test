@@ -1,0 +1,77 @@
+{
+  "run_id": "tf-2b-single-1n-single-20261008-145804",
+  "name": "tf-2b",
+  "tag": "single",
+  "framework": "mlx",
+  "mlx_version": "0.32.3",
+  "config": {
+    "name": "tf-2b",
+    "model": {
+      "type": "transformer",
+      "n_layers": 26,
+      "d_model": 2560,
+      "n_heads": 20,
+      "d_ff": null,
+      "vocab_size": 256,
+      "seq_len": 512,
+      "n_classes": 10,
+      "image_size": 32,
+      "channels": 3,
+      "width": 32
+    },
+    "data": {
+      "type": "synthetic",
+      "path": null,
+      "n_samples": 65536,
+      "seed": 1234
+    },
+    "global_batch_size": 4,
+    "rank_batch_weights": null,
+    "steps": 40,
+    "warmup_steps": 4,
+    "lr": 0.0001,
+    "min_lr_ratio": 0.1,
+    "weight_decay": 0.1,
+    "grad_clip": 1.0,
+    "compile": true,
+    "dtype": "bfloat16",
+    "seed": 0,
+    "log_every": 1,
+    "skip_first": 5,
+    "log_dir": "results/logs",
+    "benchmarks_file": "results/benchmarks.jsonl",
+    "checkpoint": null,
+    "all_reduce_size": 33554432
+  },
+  "params": 2050429440,
+  "param_bytes": 4100858880,
+  "ranks": 1,
+  "backend": "single",
+  "hosts": [
+    "Clarks-Mac-Studio.local"
+  ],
+  "global_batch_size": 4,
+  "rank_batch_sizes": [
+    4
+  ],
+  "seq_len": 512,
+  "compile": true,
+  "dtype": "bfloat16",
+  "steps": 40,
+  "skip_first": 5,
+  "steps_per_sec": 1.7588407842692788,
+  "tokens_per_sec": 3602.105926183483,
+  "throughput_unit": "tokens",
+  "wall_seconds": 25.49179120799954,
+  "first_loss": 5.710111141204834,
+  "final_loss": 5.545159339904785,
+  "min_loss": 5.5425920486450195,
+  "peak_mem_bytes_per_rank": [
+    20286190772
+  ],
+  "init_check": {
+    "checksum_seed_init": 136346.15625
+  },
+  "log": "results/logs/tf-2b-single-1n-single-20261008-145804.jsonl",
+  "timestamp": "20261008-145804"
+}
