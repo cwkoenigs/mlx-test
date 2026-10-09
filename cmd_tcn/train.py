@@ -88,12 +88,12 @@ def main(argv=None) -> int:
     t0 = time.perf_counter()
     trainer.fit(model, datamodule=dm)
     fit_s = time.perf_counter() - t0
+    s = perf.summary()  # before trainer.test(), so the forward-test pass is not counted as training time
     metrics = {k: float(v) for k, v in trainer.callback_metrics.items()}
     test_metrics = {}
     if args.test_forward and dm.test_ds is not None:
         res = trainer.test(model, datamodule=dm, verbose=False)
         test_metrics = {k: float(v) for k, v in (res[0] if res else {}).items()}
-    s = perf.summary()
     summary = {
         "run_id": run_id, "framework": "torch-lightning", "torch": torch.__version__, "lightning": L.__version__,
         "host": socket.gethostname(), "device": str(model.device),

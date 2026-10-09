@@ -223,6 +223,8 @@ def main(argv=None) -> int:
         if done:
             break
     fit_s = time.perf_counter() - t_fit
+    # Freeze the throughput clock here so the forward-test pass below is not counted as training time.
+    el = (time.perf_counter() - t_meas) if t_meas and measured else 0.0
     metrics["train/loss_epoch"] = epoch_losses[-1] if epoch_losses else float("nan")
 
     test_metrics: dict = {}
@@ -240,7 +242,6 @@ def main(argv=None) -> int:
             say(f"forward test skipped: {e}")
 
     # ---- summary -------------------------------------------------------------------------------
-    el = (time.perf_counter() - t_meas) if t_meas and measured else 0.0
     sps = measured / el if el else 0.0
     peaks = gather_json({"host": socket.gethostname(), "peak": int(mx.get_peak_memory())}, group)
     summary = {
