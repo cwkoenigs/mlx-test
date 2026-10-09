@@ -10,3 +10,5 @@
 - Before any cluster run, `./tests/selfcheck.sh` must pass on the machine you are on.
 - MLX API facts verified for the pinned version live in `.claude/skills/mlx-cluster/reference/api-notes.md`;
   re-verify them if the pin changes.
+- The report lives in `docs/` (MkDocs Material, `mkdocs.yml`; preview with `uvx --with mkdocs-material mkdocs serve`).
+  When results change, update `results/SUMMARY.md` and the matching `docs/` page together; every number must trace to a file in `results/`.

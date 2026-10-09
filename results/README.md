@@ -10,4 +10,6 @@ Everything in here is produced by the scripts and is meant to be committed (smal
 | `single_node.md`, `benchmarks.md` | `scripts/report.sh` (from `benchmarks.jsonl`) |
 | `cluster/smoke-<ts>.json`, `cluster/iperf-<ts>.txt` | `scripts/run_smoke.sh`, `scripts/iperf.sh` (Phase 2) |
 | `bigger_than_one/proof-<ts>.{md,json}` | `scripts/prove_bigger_than_one.sh` |
-| `SUMMARY.md` | you, after Phase 4 (template below) |
+| `tcn/<run>.summary.json`, `tcn/comparison.md` | `cmd_tcn.train`, `scripts/run_tcn.sh` (`cmd_tcn_mlx.train`), `cmd_tcn_mlx.report` |
+| `SUMMARY.md` | written by hand from the files above; the report in `docs/` is built on it |
+| `SUMMARY-2026-10-07-previous-pair.md` | the same summary for the previous pair of Macs (kept for comparison) |

@@ -10,3 +10,5 @@ hosts.*.json
 tests/tiny_model/
 *.safetensors
 results/**/*.tmp
+# MkDocs build output
+site/

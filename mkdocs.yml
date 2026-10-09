@@ -1,0 +1,31 @@
+site_name: Apple Silicon for Claims Deep Learning
+site_description: Can a Mac Studio stand in for cloud GPUs? PyTorch and MLX benchmarks at production shape.
+repo_url: https://github.com/cwkoenigs/mlx-test
+repo_name: cwkoenigs/mlx-test
+theme:
+  name: material
+  features: [navigation.sections, navigation.top, content.code.copy, search.highlight]
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle: {icon: material/weather-night, name: Dark mode}
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle: {icon: material/weather-sunny, name: Light mode}
+nav:
+  - Summary: index.md
+  - Setup and method: method.md
+  - Results: results.md
+  - Scaling: scaling.md
+  - Reproduce: reproduce.md
+  - Background:
+      - Original plan: MLX_DEEP_LEARNING.md
+      - Synthetic claims data spec: synthetic_cmd_generator_prompt.md
+  - References: references.md
+markdown_extensions:
+  - tables
+  - admonition
+  - attr_list
+  - toc: {permalink: true}
+  - pymdownx.highlight
+  - pymdownx.superfences
