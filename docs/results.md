@@ -31,6 +31,6 @@ At 1,024 channels (30M parameters): PyTorch 1,026 members/s in 11.1 GiB, MLX 468
     `cmd_tcn_mlx/train.py` now stop the throughput clock before the forward test, so future runs
     report training throughput only.
 
-**Two Macs hold what one cannot.** A 16.1B-parameter transformer, 60.0 GiB of float32 weights, trained split 10 layers per Mac: peak 34.9 GiB on each 48 GB machine, loss falling from 5.71 to 5.12 over 8 pipeline-parallel steps at 11 to 14 s per step ([report](https://github.com/cwkoenigs/mlx-test/blob/main/results/bigger_than_one/)).
+**Two Macs hold what one cannot.** A 16.1B-parameter transformer, 60.0 GiB of float32 weights, trained split 10 layers per Mac: peak 34.9 GiB on each 48 GB machine, loss falling from 5.71 to 5.12 over 8 pipeline-parallel steps at 11 to 14 s per step ([report](https://github.com/cwkoenigs/mlx-test/blob/main/results/bigger_than_one/proof-20261008-193659.md)).
 
 **Two Macs on a model that fits in one** help only with gradient accumulation and a Studio-heavy batch split: 1.16x at 1B and 1.17x at 2B against the Studio alone (16 micro-batches per gradient exchange, batch split 2:1). With one exchange per step the pair is slower at every size, 0.92x at 10M down to 0.45x at 2B.

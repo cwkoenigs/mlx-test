@@ -1,6 +1,6 @@
 # How it scales, and where it stops
 
-**Model size on one machine** is bounded by the 37.4 GB the GPU can address. The 2B model in bfloat16 uses 18.9 GiB, so roughly twice that size fits at the same batch; beyond it the model has to be split across machines.
+**Model size on one machine** is bounded by the 37.4 GiB the GPU can address. The 2B model in bfloat16 uses 18.9 GiB, so roughly twice that size fits at the same batch; beyond it the model has to be split across machines.
 
 **Data size** is not bounded by memory. The claims arrays are memory-mapped and read in contiguous member blocks, so the 109 GiB sequence array streams at 0.26 GiB/s while the GPU holds 6 GiB. The limit is disk throughput, and at these rates the model, not the disk, is the bottleneck.
 

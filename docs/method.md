@@ -3,7 +3,7 @@
 |  | Mac Studio (machine under test) | MacBook Pro (second node) |
 | --- | --- | --- |
 | Chip | Apple M5 Max, 40 GPU cores | Apple M5 Pro, 20 GPU cores |
-| Memory | 48 GB unified, 37.4 GB addressable by the GPU | 48 GB unified |
+| Memory | 48 GB unified, 37.4 GiB addressable by the GPU | 48 GB unified |
 | Link | Thunderbolt 5, 80 Gb/s, RDMA: 21 µs latency, 9.3 GB/s measured | same cable |
 | Software | macOS 27, Python 3.12, MLX 0.32.3, PyTorch 2.14.1 | identical |
 
