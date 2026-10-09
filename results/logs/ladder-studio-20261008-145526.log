@@ -1,0 +1,184 @@
+##### 14:55:26 configs/10m.yaml
+model=transformer params=9,835,840 (37.5 MiB float32) ranks=1 backend=single compile=True
+global batch=32 per-rank batches=[32] tokens/step=16384
+step     0  loss 5.7117     1.33 steps/s        21,831 tokens/s  peak 5.69 GiB
+step    20  loss 1.4313     9.03 steps/s       148,025 tokens/s  peak 6.08 GiB
+step    40  loss 1.3075     8.98 steps/s       147,198 tokens/s  peak 6.08 GiB
+step    60  loss 1.3094     8.99 steps/s       147,281 tokens/s  peak 6.08 GiB
+step    80  loss 1.2553     8.97 steps/s       146,913 tokens/s  peak 6.08 GiB
+step   100  loss 1.2771     9.01 steps/s       147,630 tokens/s  peak 6.08 GiB
+step   120  loss 1.2762     8.99 steps/s       147,226 tokens/s  peak 6.08 GiB
+step   140  loss 1.2844     9.00 steps/s       147,533 tokens/s  peak 6.08 GiB
+step   160  loss 1.2884     9.07 steps/s       148,639 tokens/s  peak 6.08 GiB
+step   180  loss 1.2502     9.07 steps/s       148,575 tokens/s  peak 6.08 GiB
+step   199  loss 1.2464     9.00 steps/s       147,405 tokens/s  peak 6.08 GiB
+
+== tf-10m-single-1n-single-20261008-145526 ==
+params 9,835,840 | ranks 1 (single) | global batch 32 | compile True
+avg 9.00 steps/s | 147,527 tokens/s | loss 5.7117 -> 1.2464 | wall 23.2s
+peak memory per rank: Clarks-Mac-Studio.local: 6.08 GiB
+log: results/logs/tf-10m-single-1n-single-20261008-145526.jsonl
+##### 14:55:49 done 10m (exit 0)
+##### 14:55:49 configs/100m.yaml
+model=transformer params=99,505,920 (379.6 MiB float32) ranks=1 backend=single compile=True
+global batch=16 per-rank batches=[16] tokens/step=8192
+step     0  loss 5.7154     1.37 steps/s        11,187 tokens/s  peak 11.68 GiB
+step    20  loss 1.7067     3.51 steps/s        28,753 tokens/s  peak 12.47 GiB
+step    40  loss 1.3643     3.51 steps/s        28,741 tokens/s  peak 12.47 GiB
+step    60  loss 1.3246     3.50 steps/s        28,674 tokens/s  peak 12.47 GiB
+step    80  loss 1.2762     3.51 steps/s        28,727 tokens/s  peak 12.47 GiB
+step   100  loss 1.3089     3.50 steps/s        28,699 tokens/s  peak 12.47 GiB
+step   120  loss 1.3315     3.51 steps/s        28,759 tokens/s  peak 12.47 GiB
+step   140  loss 1.2970     3.51 steps/s        28,765 tokens/s  peak 12.47 GiB
+step   160  loss 1.3104     3.51 steps/s        28,742 tokens/s  peak 12.47 GiB
+step   180  loss 1.2383     3.50 steps/s        28,689 tokens/s  peak 12.47 GiB
+step   199  loss 1.2474     3.51 steps/s        28,751 tokens/s  peak 12.47 GiB
+
+== tf-100m-single-1n-single-20261008-145550 ==
+params 99,505,920 | ranks 1 (single) | global batch 16 | compile True
+avg 3.51 steps/s | 28,721 tokens/s | loss 5.7154 -> 1.2474 | wall 57.7s
+peak memory per rank: Clarks-Mac-Studio.local: 12.47 GiB
+log: results/logs/tf-100m-single-1n-single-20261008-145550.jsonl
+##### 14:56:47 done 100m (exit 0)
+##### 14:56:47 configs/500m.yaml
+model=transformer params=510,451,200 (1947.2 MiB float32) ranks=1 backend=single compile=True
+global batch=8 per-rank batches=[8] tokens/step=4096
+step     0  loss 5.6912     1.95 steps/s         7,975 tokens/s  peak 14.43 GiB
+step    10  loss 5.6364     2.17 steps/s         8,903 tokens/s  peak 18.30 GiB
+step    20  loss 5.5795     2.18 steps/s         8,917 tokens/s  peak 18.30 GiB
+step    30  loss 5.3124     2.17 steps/s         8,883 tokens/s  peak 18.30 GiB
+step    40  loss 4.7927     2.17 steps/s         8,900 tokens/s  peak 18.30 GiB
+step    50  loss 4.0868     2.17 steps/s         8,889 tokens/s  peak 18.30 GiB
+step    60  loss 3.2834     2.18 steps/s         8,910 tokens/s  peak 18.30 GiB
+step    70  loss 2.3469     2.17 steps/s         8,899 tokens/s  peak 18.30 GiB
+step    80  loss 1.7537     2.17 steps/s         8,899 tokens/s  peak 18.30 GiB
+step    90  loss 1.4723     2.18 steps/s         8,911 tokens/s  peak 18.30 GiB
+step    99  loss 1.4502     2.17 steps/s         8,900 tokens/s  peak 18.30 GiB
+
+== tf-500m-single-1n-single-20261008-145647 ==
+params 510,451,200 | ranks 1 (single) | global batch 8 | compile True
+avg 2.17 steps/s | 8,892 tokens/s | loss 5.6912 -> 1.4502 | wall 46.2s
+peak memory per rank: Clarks-Mac-Studio.local: 18.30 GiB
+log: results/logs/tf-500m-single-1n-single-20261008-145647.jsonl
+##### 14:57:34 done 500m (exit 0)
+##### 14:57:34 configs/1b.yaml
+model=transformer params=1,062,760,320 (4054.1 MiB float32) ranks=1 backend=single compile=True
+global batch=4 per-rank batches=[4] tokens/step=2048
+step     0  loss 5.7157     1.03 steps/s         2,118 tokens/s  peak 14.53 GiB
+step     1  loss 5.7207     1.93 steps/s         3,958 tokens/s  peak 22.42 GiB
+step     2  loss 5.7421     2.06 steps/s         4,220 tokens/s  peak 22.42 GiB
+step     3  loss 5.8364     2.08 steps/s         4,252 tokens/s  peak 22.42 GiB
+step     4  loss 6.0111     2.08 steps/s         4,251 tokens/s  peak 22.42 GiB
+step     5  loss 6.0241     2.08 steps/s         4,254 tokens/s  peak 22.42 GiB
+step     6  loss 5.9592     2.08 steps/s         4,254 tokens/s  peak 22.42 GiB
+step     7  loss 7.0817     2.08 steps/s         4,254 tokens/s  peak 22.42 GiB
+step     8  loss 6.3860     2.08 steps/s         4,262 tokens/s  peak 22.42 GiB
+step     9  loss 5.8502     2.08 steps/s         4,252 tokens/s  peak 22.42 GiB
+step    10  loss 5.9467     2.08 steps/s         4,261 tokens/s  peak 22.42 GiB
+step    11  loss 5.8322     2.08 steps/s         4,257 tokens/s  peak 22.42 GiB
+step    12  loss 5.7376     2.08 steps/s         4,250 tokens/s  peak 22.42 GiB
+step    13  loss 5.7447     2.08 steps/s         4,255 tokens/s  peak 22.42 GiB
+step    14  loss 5.7747     2.08 steps/s         4,255 tokens/s  peak 22.42 GiB
+step    15  loss 5.7118     2.08 steps/s         4,262 tokens/s  peak 22.42 GiB
+step    16  loss 5.6887     2.08 steps/s         4,257 tokens/s  peak 22.42 GiB
+step    17  loss 5.6581     2.08 steps/s         4,252 tokens/s  peak 22.42 GiB
+step    18  loss 5.6249     2.08 steps/s         4,255 tokens/s  peak 22.42 GiB
+step    19  loss 5.6658     2.08 steps/s         4,257 tokens/s  peak 22.42 GiB
+step    20  loss 5.7372     2.08 steps/s         4,253 tokens/s  peak 22.42 GiB
+step    21  loss 5.7301     2.08 steps/s         4,259 tokens/s  peak 22.42 GiB
+step    22  loss 5.6765     2.08 steps/s         4,255 tokens/s  peak 22.42 GiB
+step    23  loss 5.6698     2.08 steps/s         4,260 tokens/s  peak 22.42 GiB
+step    24  loss 5.7914     2.08 steps/s         4,250 tokens/s  peak 22.42 GiB
+step    25  loss 5.6157     2.08 steps/s         4,253 tokens/s  peak 22.42 GiB
+step    26  loss 5.6115     2.08 steps/s         4,251 tokens/s  peak 22.42 GiB
+step    27  loss 5.6528     2.08 steps/s         4,252 tokens/s  peak 22.42 GiB
+step    28  loss 5.6065     2.08 steps/s         4,256 tokens/s  peak 22.42 GiB
+step    29  loss 5.6760     2.08 steps/s         4,264 tokens/s  peak 22.42 GiB
+step    30  loss 5.6552     2.08 steps/s         4,254 tokens/s  peak 22.42 GiB
+step    31  loss 5.6983     2.08 steps/s         4,253 tokens/s  peak 22.42 GiB
+step    32  loss 5.6898     2.08 steps/s         4,256 tokens/s  peak 22.42 GiB
+step    33  loss 5.5870     2.08 steps/s         4,254 tokens/s  peak 22.42 GiB
+step    34  loss 5.6349     2.08 steps/s         4,258 tokens/s  peak 22.42 GiB
+step    35  loss 5.5604     2.08 steps/s         4,259 tokens/s  peak 22.42 GiB
+step    36  loss 5.6155     2.08 steps/s         4,255 tokens/s  peak 22.42 GiB
+step    37  loss 5.6805     2.08 steps/s         4,253 tokens/s  peak 22.42 GiB
+step    38  loss 5.6097     2.08 steps/s         4,261 tokens/s  peak 22.42 GiB
+step    39  loss 5.6707     2.07 steps/s         4,248 tokens/s  peak 22.42 GiB
+step    40  loss 5.5777     2.08 steps/s         4,251 tokens/s  peak 22.42 GiB
+step    41  loss 5.5868     2.08 steps/s         4,260 tokens/s  peak 22.42 GiB
+step    42  loss 5.5589     2.08 steps/s         4,256 tokens/s  peak 22.42 GiB
+step    43  loss 5.5726     2.08 steps/s         4,256 tokens/s  peak 22.42 GiB
+step    44  loss 5.5279     2.08 steps/s         4,257 tokens/s  peak 22.42 GiB
+step    45  loss 5.5572     2.08 steps/s         4,255 tokens/s  peak 22.42 GiB
+step    46  loss 5.5724     2.08 steps/s         4,260 tokens/s  peak 22.42 GiB
+step    47  loss 5.5586     2.08 steps/s         4,257 tokens/s  peak 22.42 GiB
+step    48  loss 5.5632     2.08 steps/s         4,255 tokens/s  peak 22.42 GiB
+step    49  loss 5.5317     2.08 steps/s         4,253 tokens/s  peak 22.42 GiB
+step    50  loss 5.5224     2.08 steps/s         4,256 tokens/s  peak 22.42 GiB
+step    51  loss 5.5609     2.08 steps/s         4,255 tokens/s  peak 22.42 GiB
+step    52  loss 5.6233     2.08 steps/s         4,250 tokens/s  peak 22.42 GiB
+step    53  loss 5.5686     2.08 steps/s         4,250 tokens/s  peak 22.42 GiB
+step    54  loss 5.5481     2.07 steps/s         4,246 tokens/s  peak 22.42 GiB
+step    55  loss 5.5349     2.08 steps/s         4,256 tokens/s  peak 22.42 GiB
+step    56  loss 5.5343     2.08 steps/s         4,250 tokens/s  peak 22.42 GiB
+step    57  loss 5.5240     2.08 steps/s         4,256 tokens/s  peak 22.42 GiB
+step    58  loss 5.5276     2.08 steps/s         4,257 tokens/s  peak 22.42 GiB
+step    59  loss 5.5098     2.07 steps/s         4,244 tokens/s  peak 22.42 GiB
+
+== tf-1b-single-1n-single-20261008-145734 ==
+params 1,062,760,320 | ranks 1 (single) | global batch 4 | compile True
+avg 2.08 steps/s | 4,255 tokens/s | loss 5.7157 -> 5.5098 | wall 29.4s
+peak memory per rank: Clarks-Mac-Studio.local: 22.42 GiB
+log: results/logs/tf-1b-single-1n-single-20261008-145734.jsonl
+##### 14:58:03 done 1b (exit 0)
+##### 14:58:03 configs/2b.yaml
+model=transformer params=2,050,429,440 (3910.9 MiB bfloat16) ranks=1 backend=single compile=True
+global batch=4 per-rank batches=[4] tokens/step=2048
+step     0  loss 5.7101     0.32 steps/s           662 tokens/s  peak 12.44 GiB
+step     1  loss 5.7173     1.28 steps/s         2,619 tokens/s  peak 18.89 GiB
+step     2  loss 5.8841     1.76 steps/s         3,600 tokens/s  peak 18.89 GiB
+step     3  loss 5.8544     1.76 steps/s         3,604 tokens/s  peak 18.89 GiB
+step     4  loss 6.3080     1.76 steps/s         3,600 tokens/s  peak 18.89 GiB
+step     5  loss 6.1717     1.76 steps/s         3,602 tokens/s  peak 18.89 GiB
+step     6  loss 6.2688     1.76 steps/s         3,602 tokens/s  peak 18.89 GiB
+step     7  loss 5.8053     1.76 steps/s         3,603 tokens/s  peak 18.89 GiB
+step     8  loss 5.8599     1.76 steps/s         3,597 tokens/s  peak 18.89 GiB
+step     9  loss 5.7953     1.76 steps/s         3,599 tokens/s  peak 18.89 GiB
+step    10  loss 5.7793     1.76 steps/s         3,596 tokens/s  peak 18.89 GiB
+step    11  loss 5.7198     1.76 steps/s         3,602 tokens/s  peak 18.89 GiB
+step    12  loss 5.7252     1.76 steps/s         3,601 tokens/s  peak 18.89 GiB
+step    13  loss 5.6871     1.76 steps/s         3,601 tokens/s  peak 18.89 GiB
+step    14  loss 5.7163     1.76 steps/s         3,604 tokens/s  peak 18.89 GiB
+step    15  loss 5.7264     1.76 steps/s         3,602 tokens/s  peak 18.89 GiB
+step    16  loss 5.6750     1.76 steps/s         3,603 tokens/s  peak 18.89 GiB
+step    17  loss 5.6925     1.76 steps/s         3,601 tokens/s  peak 18.89 GiB
+step    18  loss 5.6162     1.76 steps/s         3,604 tokens/s  peak 18.89 GiB
+step    19  loss 5.6237     1.76 steps/s         3,602 tokens/s  peak 18.89 GiB
+step    20  loss 5.5880     1.76 steps/s         3,601 tokens/s  peak 18.89 GiB
+step    21  loss 5.6519     1.76 steps/s         3,603 tokens/s  peak 18.89 GiB
+step    22  loss 5.6245     1.76 steps/s         3,603 tokens/s  peak 18.89 GiB
+step    23  loss 5.6268     1.76 steps/s         3,603 tokens/s  peak 18.89 GiB
+step    24  loss 5.6553     1.76 steps/s         3,604 tokens/s  peak 18.89 GiB
+step    25  loss 5.6100     1.76 steps/s         3,605 tokens/s  peak 18.89 GiB
+step    26  loss 5.6101     1.76 steps/s         3,603 tokens/s  peak 18.89 GiB
+step    27  loss 5.5880     1.76 steps/s         3,599 tokens/s  peak 18.89 GiB
+step    28  loss 5.5957     1.76 steps/s         3,601 tokens/s  peak 18.89 GiB
+step    29  loss 5.5939     1.76 steps/s         3,604 tokens/s  peak 18.89 GiB
+step    30  loss 5.5954     1.76 steps/s         3,604 tokens/s  peak 18.89 GiB
+step    31  loss 5.6014     1.76 steps/s         3,607 tokens/s  peak 18.89 GiB
+step    32  loss 5.5789     1.76 steps/s         3,603 tokens/s  peak 18.89 GiB
+step    33  loss 5.5757     1.76 steps/s         3,600 tokens/s  peak 18.89 GiB
+step    34  loss 5.5529     1.76 steps/s         3,605 tokens/s  peak 18.89 GiB
+step    35  loss 5.5660     1.76 steps/s         3,601 tokens/s  peak 18.89 GiB
+step    36  loss 5.5504     1.76 steps/s         3,600 tokens/s  peak 18.89 GiB
+step    37  loss 5.5657     1.76 steps/s         3,604 tokens/s  peak 18.89 GiB
+step    38  loss 5.5426     1.76 steps/s         3,601 tokens/s  peak 18.89 GiB
+step    39  loss 5.5452     1.76 steps/s         3,600 tokens/s  peak 18.89 GiB
+
+== tf-2b-single-1n-single-20261008-145804 ==
+params 2,050,429,440 | ranks 1 (single) | global batch 4 | compile True
+avg 1.76 steps/s | 3,602 tokens/s | loss 5.7101 -> 5.5452 | wall 25.5s
+peak memory per rank: Clarks-Mac-Studio.local: 18.89 GiB
+log: results/logs/tf-2b-single-1n-single-20261008-145804.jsonl
+##### 14:58:29 done 2b (exit 0)
+##### LADDER COMPLETE 14:58:29

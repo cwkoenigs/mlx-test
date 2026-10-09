@@ -1,0 +1,177 @@
+##### 18:34:49 STEP 4a: MLX TCN, Studio alone, 1 epoch + forward test (512 ch, batch 1024)
+== tcn-mlx-studio-1n-single-20261008-183450: TCN channels=512 kernel=3 dilations=(1, 2, 4, 8, 16) params=7,921,420 | receptive field 125 bins | mlx 0.32.3 float32 compile=True
+   data /Users/clarkkoenigs/data/cmd: train 690,176 members / 674 steps per epoch, val 172,978 members | global batch 1024 = [1024] on ['Clarks-Mac-Studio.local'] | max_steps=674 backend=single
+step     1  epoch 0  loss 3.1853  lr 2.00e-05    0.00 steps/s          0 members/s   0.00 GiB/s X_seq  peak 10.00 GiB  (1.394s)
+step    10  epoch 0  loss 1.7352  lr 1.96e-04    1.94 steps/s      1,986 members/s   0.25 GiB/s X_seq  peak 10.28 GiB  (0.516s)
+step    20  epoch 0  loss 1.3901  lr 3.92e-04    1.94 steps/s      1,985 members/s   0.25 GiB/s X_seq  peak 10.28 GiB  (0.517s)
+step    30  epoch 0  loss 1.3608  lr 5.88e-04    1.95 steps/s      1,992 members/s   0.25 GiB/s X_seq  peak 10.28 GiB  (0.514s)
+step    40  epoch 0  loss 1.2727  lr 7.84e-04    1.94 steps/s      1,988 members/s   0.25 GiB/s X_seq  peak 10.28 GiB  (0.521s)
+step    50  epoch 0  loss 1.1973  lr 9.80e-04    1.94 steps/s      1,987 members/s   0.25 GiB/s X_seq  peak 10.28 GiB  (0.516s)
+step    60  epoch 0  loss 1.2871  lr 1.00e-03    1.94 steps/s      1,985 members/s   0.25 GiB/s X_seq  peak 10.28 GiB  (0.514s)
+step    70  epoch 0  loss 1.2064  lr 9.98e-04    1.94 steps/s      1,984 members/s   0.25 GiB/s X_seq  peak 10.28 GiB  (0.515s)
+step    80  epoch 0  loss 1.2498  lr 9.95e-04    1.94 steps/s      1,984 members/s   0.25 GiB/s X_seq  peak 10.28 GiB  (0.519s)
+step    90  epoch 0  loss 1.2354  lr 9.91e-04    1.94 steps/s      1,982 members/s   0.25 GiB/s X_seq  peak 10.28 GiB  (0.529s)
+step   100  epoch 0  loss 1.2015  lr 9.86e-04    1.94 steps/s      1,982 members/s   0.25 GiB/s X_seq  peak 10.28 GiB  (0.526s)
+step   110  epoch 0  loss 1.1995  lr 9.80e-04    1.93 steps/s      1,974 members/s   0.25 GiB/s X_seq  peak 10.28 GiB  (0.598s)
+step   120  epoch 0  loss 1.2165  lr 9.73e-04    1.91 steps/s      1,952 members/s   0.25 GiB/s X_seq  peak 10.28 GiB  (0.581s)
+step   130  epoch 0  loss 1.2109  lr 9.65e-04    1.89 steps/s      1,935 members/s   0.25 GiB/s X_seq  peak 10.28 GiB  (0.587s)
+step   140  epoch 0  loss 1.2395  lr 9.56e-04    1.87 steps/s      1,919 members/s   0.24 GiB/s X_seq  peak 10.28 GiB  (0.589s)
+step   150  epoch 0  loss 1.1885  lr 9.45e-04    1.86 steps/s      1,904 members/s   0.24 GiB/s X_seq  peak 10.28 GiB  (0.598s)
+step   160  epoch 0  loss 1.2102  lr 9.34e-04    1.85 steps/s      1,895 members/s   0.24 GiB/s X_seq  peak 10.28 GiB  (0.548s)
+step   170  epoch 0  loss 1.1977  lr 9.22e-04    1.84 steps/s      1,886 members/s   0.24 GiB/s X_seq  peak 10.28 GiB  (0.589s)
+step   180  epoch 0  loss 1.2286  lr 9.08e-04    1.83 steps/s      1,875 members/s   0.24 GiB/s X_seq  peak 10.28 GiB  (0.594s)
+step   190  epoch 0  loss 1.2058  lr 8.94e-04    1.82 steps/s      1,867 members/s   0.24 GiB/s X_seq  peak 10.28 GiB  (0.590s)
+step   200  epoch 0  loss 1.1494  lr 8.79e-04    1.82 steps/s      1,859 members/s   0.24 GiB/s X_seq  peak 10.28 GiB  (0.600s)
+step   210  epoch 0  loss 1.1969  lr 8.63e-04    1.81 steps/s      1,852 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.591s)
+step   220  epoch 0  loss 1.1563  lr 8.47e-04    1.80 steps/s      1,846 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.591s)
+step   230  epoch 0  loss 1.2381  lr 8.29e-04    1.80 steps/s      1,841 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.590s)
+step   240  epoch 0  loss 1.2261  lr 8.11e-04    1.79 steps/s      1,837 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.580s)
+step   250  epoch 0  loss 1.1739  lr 7.92e-04    1.79 steps/s      1,833 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.583s)
+step   260  epoch 0  loss 1.1590  lr 7.73e-04    1.79 steps/s      1,828 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.595s)
+step   270  epoch 0  loss 1.1916  lr 7.53e-04    1.78 steps/s      1,824 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.595s)
+step   280  epoch 0  loss 1.2108  lr 7.33e-04    1.78 steps/s      1,820 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.590s)
+step   290  epoch 0  loss 1.2105  lr 7.12e-04    1.77 steps/s      1,816 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.606s)
+step   300  epoch 0  loss 1.1664  lr 6.90e-04    1.77 steps/s      1,812 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.597s)
+step   310  epoch 0  loss 1.1658  lr 6.69e-04    1.77 steps/s      1,809 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.592s)
+step   320  epoch 0  loss 1.2036  lr 6.47e-04    1.76 steps/s      1,807 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.590s)
+step   330  epoch 0  loss 1.2512  lr 6.24e-04    1.76 steps/s      1,804 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.584s)
+step   340  epoch 0  loss 1.1976  lr 6.02e-04    1.76 steps/s      1,802 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.583s)
+step   350  epoch 0  loss 1.2081  lr 5.79e-04    1.76 steps/s      1,801 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.584s)
+step   360  epoch 0  loss 1.1904  lr 5.57e-04    1.76 steps/s      1,799 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.593s)
+step   370  epoch 0  loss 1.2133  lr 5.34e-04    1.75 steps/s      1,795 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.552s)
+step   380  epoch 0  loss 1.1973  lr 5.12e-04    1.75 steps/s      1,796 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.561s)
+step   390  epoch 0  loss 1.1696  lr 4.89e-04    1.75 steps/s      1,796 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.585s)
+step   400  epoch 0  loss 1.2237  lr 4.67e-04    1.75 steps/s      1,795 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.548s)
+step   410  epoch 0  loss 1.1717  lr 4.45e-04    1.75 steps/s      1,796 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.587s)
+step   420  epoch 0  loss 1.1571  lr 4.23e-04    1.75 steps/s      1,794 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.593s)
+step   430  epoch 0  loss 1.1420  lr 4.01e-04    1.75 steps/s      1,793 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.572s)
+step   440  epoch 0  loss 1.1967  lr 3.80e-04    1.75 steps/s      1,791 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.591s)
+step   450  epoch 0  loss 1.2033  lr 3.59e-04    1.75 steps/s      1,790 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.603s)
+step   460  epoch 0  loss 1.2087  lr 3.39e-04    1.75 steps/s      1,789 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.594s)
+step   470  epoch 0  loss 1.1675  lr 3.19e-04    1.75 steps/s      1,787 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.589s)
+step   480  epoch 0  loss 1.2277  lr 3.00e-04    1.74 steps/s      1,786 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.535s)
+step   490  epoch 0  loss 1.1962  lr 2.81e-04    1.74 steps/s      1,785 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.588s)
+step   500  epoch 0  loss 1.1951  lr 2.64e-04    1.74 steps/s      1,783 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.590s)
+step   510  epoch 0  loss 1.2138  lr 2.47e-04    1.74 steps/s      1,782 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.592s)
+step   520  epoch 0  loss 1.1530  lr 2.30e-04    1.74 steps/s      1,781 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.592s)
+step   530  epoch 0  loss 1.1808  lr 2.15e-04    1.74 steps/s      1,780 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.599s)
+step   540  epoch 0  loss 1.1924  lr 2.00e-04    1.74 steps/s      1,779 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.584s)
+step   550  epoch 0  loss 1.1764  lr 1.86e-04    1.74 steps/s      1,778 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.598s)
+step   560  epoch 0  loss 1.2216  lr 1.73e-04    1.74 steps/s      1,777 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.592s)
+step   570  epoch 0  loss 1.2163  lr 1.61e-04    1.73 steps/s      1,776 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.595s)
+step   580  epoch 0  loss 1.2038  lr 1.50e-04    1.73 steps/s      1,775 members/s   0.23 GiB/s X_seq  peak 10.28 GiB  (0.592s)
+step   590  epoch 0  loss 1.2312  lr 1.41e-04    1.73 steps/s      1,775 members/s   0.22 GiB/s X_seq  peak 10.28 GiB  (0.591s)
+step   600  epoch 0  loss 1.1808  lr 1.32e-04    1.73 steps/s      1,774 members/s   0.22 GiB/s X_seq  peak 10.28 GiB  (0.591s)
+step   610  epoch 0  loss 1.1845  lr 1.24e-04    1.73 steps/s      1,773 members/s   0.22 GiB/s X_seq  peak 10.28 GiB  (0.590s)
+step   620  epoch 0  loss 1.1884  lr 1.17e-04    1.73 steps/s      1,772 members/s   0.22 GiB/s X_seq  peak 10.28 GiB  (0.592s)
+step   630  epoch 0  loss 1.2214  lr 1.11e-04    1.73 steps/s      1,771 members/s   0.22 GiB/s X_seq  peak 10.28 GiB  (0.591s)
+step   640  epoch 0  loss 1.2355  lr 1.07e-04    1.73 steps/s      1,771 members/s   0.22 GiB/s X_seq  peak 10.28 GiB  (0.592s)
+step   650  epoch 0  loss 1.2094  lr 1.04e-04    1.73 steps/s      1,771 members/s   0.22 GiB/s X_seq  peak 10.28 GiB  (0.598s)
+step   660  epoch 0  loss 1.2125  lr 1.01e-04    1.73 steps/s      1,770 members/s   0.22 GiB/s X_seq  peak 10.28 GiB  (0.591s)
+step   670  epoch 0  loss 1.2099  lr 1.00e-04    1.73 steps/s      1,770 members/s   0.22 GiB/s X_seq  peak 10.28 GiB  (0.589s)
+step   674  epoch 0  loss 1.1916  lr 1.00e-04    1.73 steps/s      1,769 members/s   0.22 GiB/s X_seq  peak 10.28 GiB  (0.590s)
+epoch 0 done: train loss 1.2234 | val loss 1.1882 mae_log1p 1.5715 mae_usd 485
+forward test: loss 1.1735 mae_log1p 1.5552 mae_usd 479
+== tcn-mlx-studio-1n-single-20261008-183450 ==
+params 7,921,420 | 1 rank(s) single on ['Clarks-Mac-Studio.local'] | 669 measured steps | 1.09 steps/s | 1,114 members/s (0.14 GiB/s of X_seq) | peak device mem 10.28 GiB | fit wall 396.3s
+summary: results/tcn/tcn-mlx-studio-1n-single-20261008-183450.summary.json
+##### 18:45:09 STEP 4b: PyTorch TCN, Studio alone, 1 epoch + forward test (512 ch, batch 1024, bf16-mixed)
+/Users/clarkkoenigs/Developer/mlx-test/.venv/lib/python3.12/site-packages/lightning/pytorch/trainer/connectors/logger_connector/logger_connector.py:76: Starting from v1.9.0, `tensorboardX` has been removed as a dependency of the `lightning.pytorch` package, due to potential conflicts with other packages in the ML ecosystem. For this reason, `logger=True` will use `CSVLogger` as the default logger, unless the `tensorboard` or `tensorboardX` packages are found. Please `pip install lightning[extra]` or one of them to enable TensorBoard support by default
+/Users/clarkkoenigs/Developer/mlx-test/.venv/lib/python3.12/site-packages/lightning/pytorch/utilities/_pytree.py:21: `isinstance(treespec, LeafSpec)` is deprecated, use `isinstance(treespec, TreeSpec) and treespec.is_leaf()` instead.
+== tcn-torch-studio-20261008-184510: TCN channels=512 kernel=3 dilations=(1, 2, 4, 8, 16) params=7,921,420 | receptive field 125 bins
+   data /Users/clarkkoenigs/data/cmd: train 690,176 members / 674 blocks of 1024, val 172,978 members | max_steps=674 workers=8 precision=bf16-mixed accelerator=MPSAccelerator
+                                                                        [AEpoch 0: 100%|██████████| 674/674 [02:21<00:00,  4.75it/s, v_num=1, train/loss_step=1.180, perf/steps_per_sec=4.970, perf/members_per_sec=5.09e+3, val/loss=1.190]Epoch 0: 100%|██████████| 674/674 [02:21<00:00,  4.75it/s, v_num=1, train/loss_step=1.180, perf/steps_per_sec=4.970, perf/members_per_sec=5.09e+3, val/loss=1.190, train/loss_epoch=1.250]`Trainer.fit` stopped: `max_steps=674` reached.
+Epoch 0: 100%|██████████| 674/674 [02:21<00:00,  4.75it/s, v_num=1, train/loss_step=1.180, perf/steps_per_sec=4.970, perf/members_per_sec=5.09e+3, val/loss=1.190, train/loss_epoch=1.250]
+== tcn-torch-studio-20261008-184510 ==
+params 7,921,420 | 669 measured steps | 2.04 steps/s | 2,091 members/s (0.26 GiB/s of X_seq) | peak device mem 6.09 GiB | fit wall 222.0s
+  val/loss           1.1868
+  val/mae_log1p      1.5647
+  val/mae_usd        485.3612
+  test/loss          1.1725
+  test/mae_log1p     1.5484
+  test/mae_usd       479.3131
+summary: results/tcn/tcn-torch-studio-20261008-184510.summary.json
+##### 18:50:43 STEP 4c: 1024 channels, 100 steps each: MLX then PyTorch
+params 29,962,508 | 1 rank(s) single on ['Clarks-Mac-Studio.local'] | 95 measured steps | 0.46 steps/s | 468 members/s (0.06 GiB/s of X_seq) | peak device mem 20.63 GiB | fit wall 218.3s
+summary: results/tcn/tcn-mlx-studio-1024ch-1n-single-20261008-185044.summary.json
+params 29,962,508 | 95 measured steps | 1.00 steps/s | 1,026 members/s (0.13 GiB/s of X_seq) | peak device mem 11.09 GiB | fit wall 98.9s
+summary: results/tcn/tcn-torch-studio-1024ch-20261008-185424.summary.json
+##### 18:56:05 STEP 5: PyTorch transformer baselines on the Studio
+--- torch 10m
+avg 4.74 steps/s | 77,633 tokens/s | loss 5.6923 -> 1.2460
+--- torch 100m
+avg 1.38 steps/s | 11,327 tokens/s | loss 5.7005 -> 1.2457
+--- torch 500m
+avg 0.57 steps/s | 2,329 tokens/s | loss 5.7064 -> 1.2567
+--- torch 1b
+avg 0.41 steps/s | 843 tokens/s | loss 5.6755 -> 1.3084
+##### 19:04:43 STEP 3: two-Mac ladder over jaccl (plus ring at 10m/100m)
+--- jaccl 10m
+init check: {"checksum_seed_init": 5441.2529296875, "seed_init_identical_across_ranks": true, "checksums_after_broadcast": [5441.2529296875, 5441.2529296875], "identical_after_broadcast": true}
+params 9,835,840 | ranks 2 (jaccl) | global batch 32 | compile True
+avg 8.27 steps/s | 135,447 tokens/s | loss 5.7040 -> 1.2385 | wall 25.1s
+--- jaccl 100m
+init check: {"checksum_seed_init": 22248.5078125, "seed_init_identical_across_ranks": true, "checksums_after_broadcast": [22248.5078125, 22248.5078125], "identical_after_broadcast": true}
+params 99,505,920 | ranks 2 (jaccl) | global batch 16 | compile True
+avg 2.90 steps/s | 23,726 tokens/s | loss 5.7107 -> 1.2562 | wall 70.2s
+--- jaccl 500m
+init check: {"checksum_seed_init": 57047.703125, "seed_init_identical_across_ranks": true, "checksums_after_broadcast": [57047.703125, 57047.703125], "identical_after_broadcast": true}
+params 510,451,200 | ranks 2 (jaccl) | global batch 8 | compile True
+avg 1.27 steps/s | 5,205 tokens/s | loss 5.6963 -> 1.3177 | wall 79.0s
+--- jaccl 1b
+init check: {"checksum_seed_init": 93850.8046875, "seed_init_identical_across_ranks": true, "checksums_after_broadcast": [93850.8046875, 93850.8046875], "identical_after_broadcast": true}
+params 1,062,760,320 | ranks 2 (jaccl) | global batch 4 | compile True
+avg 0.87 steps/s | 1,784 tokens/s | loss 5.7242 -> 5.0568 | wall 70.6s
+--- jaccl 2b
+init check: {"checksum_seed_init": 136346.15625, "seed_init_identical_across_ranks": true, "checksums_after_broadcast": [136346.15625, 136346.15625], "identical_after_broadcast": true}
+params 2,050,429,440 | ranks 2 (jaccl) | global batch 4 | compile True
+avg 0.78 steps/s | 1,606 tokens/s | loss 5.6907 -> 5.5542 | wall 54.5s
+--- ring 10m
+params 9,835,840 | ranks 2 (ring) | global batch 32 | compile True
+avg 7.88 steps/s | 129,168 tokens/s | loss 5.7040 -> 1.2385 | wall 25.6s
+--- ring 100m
+params 99,505,920 | ranks 2 (ring) | global batch 16 | compile True
+avg 2.50 steps/s | 20,497 tokens/s | loss 5.7107 -> 1.2557 | wall 80.1s
+##### 19:11:37 STEP 2: bigger-than-one proof, plan first
+[33m[WARN] Node with rank 0 exited with code 2 [0m
+Exception in thread Thread-2 (_thread_fn):
+Traceback (most recent call last):
+  File "/Users/clarkkoenigs/.local/share/uv/python/cpython-3.12.15-macos-aarch64-none/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+    self.run()
+  File "/Users/clarkkoenigs/.local/share/uv/python/cpython-3.12.15-macos-aarch64-none/lib/python3.12/threading.py", line 1012, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/clarkkoenigs/Developer/mlx-test/.venv/lib/python3.12/site-packages/mlx/_distributed_utils/launch.py", line 215, in _thread_fn
+    command.terminate()
+  File "/Users/clarkkoenigs/Developer/mlx-test/.venv/lib/python3.12/site-packages/mlx/_distributed_utils/launch.py", line 97, in terminate
+    c = run(
+        ^^^^
+  File "/Users/clarkkoenigs/.local/share/uv/python/cpython-3.12.15-macos-aarch64-none/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command 'ssh Clarks-MacBook-Pro.local 'pid=$(cat None); if ps -p $pid >/dev/null; then     kill $pid;     echo 1; else     echo 0; fi; rm None'' returned non-zero exit status 1.
+##### 19:11:37 STEP 2: the proof
+  rank 0 (Clarks-Mac-Studio.local): budget 30.4 GiB -> capacity 10 layers, assigned 10 layers = 29.99 GiB
+  rank 1 (Clarks-MBP.localdomain): budget 30.4 GiB -> capacity 10 layers, assigned 10 layers = 29.99 GiB
+  total: 20 layers = 60.0 GiB of parameters vs largest single node usable 48.0 GiB (BIGGER)
+  built layer 1/10  resident 3.01 GiB  (0s)
+  built layer 2/10  resident 6.00 GiB  (0s)
+  built layer 3/10  resident 9.00 GiB  (0s)
+  built layer 4/10  resident 12.00 GiB  (0s)
+  built layer 5/10  resident 15.00 GiB  (1s)
+  built layer 6/10  resident 18.00 GiB  (1s)
+  built layer 7/10  resident 20.99 GiB  (1s)
+  built layer 8/10  resident 23.99 GiB  (1s)
+  built layer 9/10  resident 26.99 GiB  (1s)
+  built layer 10/10  resident 29.99 GiB  (1s)
+step 0: loss 5.7070  (22.2s forward+backward+sgd across 2 ranks)
+step 1: loss 5.3571  (11.5s forward+backward+sgd across 2 ranks)
+step 2: loss 5.9872  (11.9s forward+backward+sgd across 2 ranks)
+step 3: loss 5.8269  (14.2s forward+backward+sgd across 2 ranks)
+  [PASS] model parameters (60.0 GiB, measured) exceed the largest node's ram (48.0 GiB on Clarks-Mac-Studio.local)
+  [PASS] Clarks-Mac-Studio.local holds 30.0 GiB of parameters, peak 34.9 GiB, within its 48.0 GiB RAM
+  [PASS] Clarks-MBP.localdomain holds 30.0 GiB of parameters, peak 34.9 GiB, within its 48.0 GiB RAM
+  [PASS] forward pass across the pipeline gives a finite loss (5.7070)
+  [FAIL] pipeline-parallel backward + SGD decreases the loss over 4 steps (5.7070 -> 5.8269)
+PROOF: FAIL   (report: results/bigger_than_one/proof-20261008-191243.md)
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command 'ssh Clarks-MacBook-Pro.local 'pid=$(cat /var/folders/4w/hj7w8g4s42ggqnzrp6jvs4fr0000gn/T/tmp.PEZf4bEfsd); if ps -p $pid >/dev/null; then     kill $pid;     echo 1; else     echo 0; fi; rm /var/folders/4w/hj7w8g4s42ggqnzrp6jvs4fr0000gn/T/tmp.PEZf4bEfsd'' returned non-zero exit status 1.
+##### 19:12:43 ALL DONE

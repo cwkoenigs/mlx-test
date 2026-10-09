@@ -1,0 +1,33 @@
+##### 19:50:08 500m: Studio alone, accumulate 8 (control)
+params 510,451,200 | ranks 1 (single) | global batch 8 | compile True
+avg 2.26 steps/s | 9,240 tokens/s | loss 5.6912 -> 3.2852 | wall 42.9s
+##### 19:50:51 500m: both Macs jaccl, accumulate 8, even split
+params 510,451,200 | ranks 2 (jaccl) | global batch 8 | compile True
+avg 2.03 steps/s | 8,296 tokens/s | loss 5.7084 -> 3.3692 | wall 47.3s
+##### 19:51:40 500m: both Macs jaccl, accumulate 8, split 2:1
+params 510,451,200 | ranks 2 (jaccl) | global batch 8 | compile True
+avg 2.62 steps/s | 10,718 tokens/s | loss 5.7078 -> 3.5702 | wall 36.9s
+##### 19:52:18 1b: Studio alone, accumulate 8 (control)
+params 1,062,760,320 | ranks 1 (single) | global batch 4 | compile True
+avg 2.27 steps/s | 4,657 tokens/s | loss 5.7157 -> 5.5871 | wall 42.2s
+##### 19:53:00 1b: both Macs jaccl, accumulate 8, even split
+params 1,062,760,320 | ranks 2 (jaccl) | global batch 4 | compile True
+avg 1.69 steps/s | 3,468 tokens/s | loss 5.7068 -> 5.6849 | wall 54.9s
+##### 19:53:57 1b: both Macs jaccl, accumulate 8, split 2:1
+params 1,062,760,320 | ranks 2 (jaccl) | global batch 4 | compile True
+avg 2.36 steps/s | 4,830 tokens/s | loss 5.7154 -> 5.6127 | wall 40.3s
+##### 19:54:38 2b: Studio alone, accumulate 8 (control)
+params 2,050,429,440 | ranks 1 (single) | global batch 4 | compile True
+avg 1.90 steps/s | 3,887 tokens/s | loss 5.7101 -> 5.6090 | wall 50.6s
+##### 19:55:30 2b: both Macs jaccl, accumulate 8, even split
+params 2,050,429,440 | ranks 2 (jaccl) | global batch 4 | compile True
+avg 1.42 steps/s | 2,914 tokens/s | loss 5.6820 -> 5.6157 | wall 65.3s
+##### 19:56:37 2b: both Macs jaccl, accumulate 8, split 2:1
+params 2,050,429,440 | ranks 2 (jaccl) | global batch 4 | compile True
+avg 2.01 steps/s | 4,119 tokens/s | loss 5.7068 -> 5.6114 | wall 47.2s
+##### 19:57:26 1b and 2b: both Macs jaccl, accumulate 16, split 2:1
+params 1,062,760,320 | ranks 2 (jaccl) | global batch 4 | compile True
+avg 2.64 steps/s | 5,404 tokens/s | loss 5.7154 -> 5.8036 | wall 36.2s
+params 2,050,429,440 | ranks 2 (jaccl) | global batch 4 | compile True
+avg 2.23 steps/s | 4,558 tokens/s | loss 5.7068 -> 5.9746 | wall 42.9s
+##### 19:58:49 ACCUM CHAIN DONE
