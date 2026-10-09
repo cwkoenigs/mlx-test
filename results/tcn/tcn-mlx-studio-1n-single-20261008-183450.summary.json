@@ -1,0 +1,80 @@
+{
+  "run_id": "tcn-mlx-studio-1n-single-20261008-183450",
+  "framework": "mlx",
+  "mlx": "0.32.3",
+  "hosts": [
+    "Clarks-Mac-Studio.local"
+  ],
+  "ranks": 1,
+  "backend": "single",
+  "device": "Device(gpu, 0)",
+  "config": {
+    "data_root": "/Users/clarkkoenigs/data/cmd",
+    "batch_size": 1024,
+    "rank_weights": null,
+    "max_steps": 674,
+    "epochs": 1,
+    "limit_members": null,
+    "val_fraction": 0.2,
+    "val_batches": 20,
+    "test_forward": true,
+    "test_batches": 0,
+    "channels": 512,
+    "kernel": 3,
+    "dilations": [
+      1,
+      2,
+      4,
+      8,
+      16
+    ],
+    "dropout": 0.1,
+    "lr": 0.001,
+    "weight_decay": 0.01,
+    "warmup_steps": 50,
+    "dtype": "float32",
+    "compile": true,
+    "prefetch": 4,
+    "all_reduce_size": 33554432,
+    "seed": 0,
+    "log_every": 10,
+    "out_dir": "results/tcn",
+    "name": "tcn-mlx-studio",
+    "global_batch": 1024,
+    "rank_batch_sizes": [
+      1024
+    ],
+    "precision": "float32"
+  },
+  "params": 7921420,
+  "receptive_field": 125,
+  "train_members": 690176,
+  "val_members": 172978,
+  "steps_per_epoch": 674,
+  "fit_wall_s": 396.253489499999,
+  "measured_steps": 669,
+  "wall_s": 614.8183624159974,
+  "steps_per_sec": 1.088126251420159,
+  "members_per_sec": 1114.2412814542429,
+  "peak_device_bytes": 11043422944,
+  "peak_per_rank": [
+    {
+      "host": "Clarks-Mac-Studio.local",
+      "peak": 11043422944
+    }
+  ],
+  "gib_per_sec_x_seq": 0.14121267346692584,
+  "metrics": {
+    "val/loss": 1.1882416020784474,
+    "val/mae_log1p": 1.57146011695626,
+    "val/mae_usd": 485.0206362629794,
+    "val/blocks_per_rank": 20,
+    "train/loss_epoch": 1.223388448313365
+  },
+  "test_metrics": {
+    "test/loss": 1.1734762503833718,
+    "test/mae_log1p": 1.5552034214926447,
+    "test/mae_usd": 479.2428376016094,
+    "test/blocks_per_rank": 828
+  }
+}

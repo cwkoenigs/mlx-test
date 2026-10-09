@@ -1,0 +1,86 @@
+{
+  "run_id": "tf-2b-jaccl-2n-jaccl-20261008-190855",
+  "name": "tf-2b",
+  "tag": "jaccl",
+  "framework": "mlx",
+  "mlx_version": "0.32.3",
+  "config": {
+    "name": "tf-2b",
+    "model": {
+      "type": "transformer",
+      "n_layers": 26,
+      "d_model": 2560,
+      "n_heads": 20,
+      "d_ff": null,
+      "vocab_size": 256,
+      "seq_len": 512,
+      "n_classes": 10,
+      "image_size": 32,
+      "channels": 3,
+      "width": 32
+    },
+    "data": {
+      "type": "synthetic",
+      "path": null,
+      "n_samples": 65536,
+      "seed": 1234
+    },
+    "global_batch_size": 4,
+    "rank_batch_weights": null,
+    "steps": 40,
+    "warmup_steps": 4,
+    "lr": 0.0001,
+    "min_lr_ratio": 0.1,
+    "weight_decay": 0.1,
+    "grad_clip": 1.0,
+    "compile": true,
+    "dtype": "bfloat16",
+    "seed": 0,
+    "log_every": 1,
+    "skip_first": 5,
+    "log_dir": "results/logs",
+    "benchmarks_file": "results/benchmarks.jsonl",
+    "checkpoint": null,
+    "all_reduce_size": 33554432
+  },
+  "params": 2050429440,
+  "param_bytes": 4100858880,
+  "ranks": 2,
+  "backend": "jaccl",
+  "hosts": [
+    "Clarks-Mac-Studio.local",
+    "Clarks-MBP.localdomain"
+  ],
+  "global_batch_size": 4,
+  "rank_batch_sizes": [
+    2,
+    2
+  ],
+  "seq_len": 512,
+  "compile": true,
+  "dtype": "bfloat16",
+  "steps": 40,
+  "skip_first": 5,
+  "steps_per_sec": 0.7840652054241896,
+  "tokens_per_sec": 1605.7655407087402,
+  "throughput_unit": "tokens",
+  "wall_seconds": 54.47221858299963,
+  "first_loss": 5.690720558166504,
+  "final_loss": 5.554208278656006,
+  "min_loss": 5.546030044555664,
+  "peak_mem_bytes_per_rank": [
+    17740772990,
+    17736555390
+  ],
+  "init_check": {
+    "checksum_seed_init": 136346.15625,
+    "seed_init_identical_across_ranks": true,
+    "checksums_after_broadcast": [
+      136346.15625,
+      136346.15625
+    ],
+    "identical_after_broadcast": true
+  },
+  "log": "results/logs/tf-2b-jaccl-2n-jaccl-20261008-190855.jsonl",
+  "timestamp": "20261008-190855"
+}

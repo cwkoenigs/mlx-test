@@ -1,0 +1,69 @@
+{
+  "run_id": "tf-500m-torch-1n-torch-mps-20261008-185918",
+  "name": "tf-500m",
+  "tag": "torch",
+  "framework": "torch",
+  "torch_version": "2.14.1",
+  "config": {
+    "name": "tf-500m",
+    "model": {
+      "type": "transformer",
+      "n_layers": 18,
+      "d_model": 1536,
+      "n_heads": 12,
+      "d_ff": null,
+      "vocab_size": 256,
+      "seq_len": 512,
+      "n_classes": 10,
+      "image_size": 32,
+      "channels": 3,
+      "width": 32
+    },
+    "data": {
+      "type": "synthetic",
+      "path": null,
+      "n_samples": 65536,
+      "seed": 1234
+    },
+    "global_batch_size": 8,
+    "rank_batch_weights": null,
+    "steps": 100,
+    "warmup_steps": 10,
+    "lr": 0.0002,
+    "min_lr_ratio": 0.1,
+    "weight_decay": 0.1,
+    "grad_clip": 1.0,
+    "compile": true,
+    "dtype": "float32",
+    "seed": 0,
+    "log_every": 10,
+    "skip_first": 10,
+    "log_dir": "results/logs",
+    "benchmarks_file": "results/benchmarks.jsonl",
+    "checkpoint": null,
+    "all_reduce_size": 33554432
+  },
+  "params": 510451200,
+  "ranks": 1,
+  "backend": "torch-mps",
+  "hosts": [
+    "Clarks-Mac-Studio.local"
+  ],
+  "global_batch_size": 8,
+  "seq_len": 512,
+  "compile": false,
+  "dtype": "float32",
+  "steps": 100,
+  "skip_first": 10,
+  "steps_per_sec": 0.5686215547257188,
+  "tokens_per_sec": 2329.0738881565444,
+  "throughput_unit": "tokens",
+  "first_loss": 5.706361770629883,
+  "final_loss": 1.2566627264022827,
+  "min_loss": 1.158463716506958,
+  "peak_mem_bytes_per_rank": [
+    21604892672
+  ],
+  "log": "results/logs/tf-500m-torch-1n-torch-mps-20261008-185918.jsonl",
+  "timestamp": "20261008-185918"
+}

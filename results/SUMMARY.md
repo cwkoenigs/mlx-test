@@ -1,136 +1,97 @@
-# Summary
+# Summary (2026-10-08, current pair of Macs)
 
-Run on 2026-10-07. Everything below comes from files in this directory; the commands that
-produced them are in `.claude/skills/mlx-cluster/SKILL.md`.
+Everything below comes from files in this directory, measured on 2026-10-08. The previous pair's
+write-up (M2 Pro laptop + 36 GB Studio, 2026-10-07) is `SUMMARY-2026-10-07-previous-pair.md`.
 
-**Hardware** (`hardware/`): Node A = MacBook Pro, Apple M2 Pro, 10 CPU / 16 GPU cores, 16 GiB,
-Metal working set 11.8 GiB, macOS 27.2. Node B = Mac Studio, Apple M5 Max, 18 CPU / 32 GPU cores,
-36 GiB, Metal working set 28.1 GiB, macOS 27.0.1. Both: Python 3.12.15, mlx 0.32.3.
+**Hardware** (`hardware/`): Mac Studio, Apple M5 Max, 40 GPU cores, 48 GB (37.4 GB usable by the
+GPU). MacBook Pro, Apple M5 Pro, 20 GPU cores, 48 GB. Direct Thunderbolt 5 cable at 80 Gb/s with RDMA.
+Both macOS 27, Python 3.12.15, mlx 0.32.3, torch 2.14.1.
 
-**Link** (`cluster/smoke-20261007-082135.json`): direct Thunderbolt cable, negotiated at 40 Gb/s
-(the M2 Pro is Thunderbolt 4, so TB5 and RDMA/`jaccl` are unavailable for this pair; `ring` over
-TCP on `bridge0` link-local addresses only). MLX collectives: all_sum latency 143 µs (1 float),
-all_sum 3.7 GB/s and all_gather 3.9 GB/s at 128 MiB, 1 MiB ping-pong 0.62 ms round trip.
-iperf3 was not run (not installed on either Mac); the MLX numbers are what training sees.
+**Link** (`cluster/smoke-20261008-*.json`): MLX collectives over RDMA (`jaccl`) 21 µs all_sum latency,
+9.3 GB/s at 128 MiB; over TCP (`ring`) 139 µs, 6.6 GB/s.
 
-## 1. How productive is MLX for writing and training models, compared with PyTorch on MPS?
+## 1. How productive is MLX compared with PyTorch on MPS?
 
-Same transformer, same synthetic data, same optimizer and schedule, same loss curves
-(both reach 1.246 on the 10M model):
+Same decoder-only transformer, same synthetic tokens, same optimizer and schedule, same loss curves
+(both reach 1.25 at 10M and 100M). Studio alone (`benchmarks.md`, `logs/`):
 
-| Model | MLX compiled | MLX eager | PyTorch MPS | MLX/Torch | Peak mem MLX / Torch |
+| Model | Batch | MLX (compiled) | PyTorch MPS | MLX / PyTorch |
+|---|---|---|---|---|
+| 10M | 32 | 9.00 steps/s, 147.5k tok/s | 4.74 steps/s, 77.6k tok/s | 1.9x |
+| 100M | 16 | 3.51 steps/s, 28.7k tok/s | 1.38 steps/s, 11.3k tok/s | 2.5x |
+| 500M | 8 | 2.17 steps/s, 8.9k tok/s | 0.57 steps/s, 2.3k tok/s | 3.8x |
+| 1B | 4 | 2.08 steps/s, 4.3k tok/s | 0.41 steps/s, 0.8k tok/s | 5.1x |
+
+MLX's lead grows with model size. Caveat from a separate experiment the same day (a recurrent
+LSTM language model, repo since removed): for recurrent models PyTorch's fused MPS LSTM kernel was
+1.5x to 12x faster than an MLX LSTM written as a Python loop over time steps, and MLX's unrolled graph
+needed far more memory. MLX wins on transformers and convolutions; recurrence needs a fused kernel.
+
+**The claims workload** (`tcn/comparison.md`): the CMD TCN, 512 channels, 7.9M parameters, batch
+1,024 members, one epoch over 690k training members plus the 847k-member forward test.
+
+| Setup | Members/s | X_seq from disk | Peak GPU mem | Epoch (fit) | Forward-test loss |
 |---|---|---|---|---|---|
-| tf-10m (batch 32) | 6.87 steps/s, 112.5k tok/s | 5.85 steps/s | 3.71 steps/s, 60.8k tok/s | 1.85x | 6.08 / 6.13 GiB |
-| tf-100m (batch 16) | 2.66 steps/s, 21.8k tok/s | 2.25 steps/s | 1.09 steps/s, 8.9k tok/s | 2.44x | 12.47 / 11.82 GiB |
+| PyTorch, Studio, bf16-mixed | 2,091 | 0.26 GiB/s | 6.1 GiB | 222 s | 1.1725 |
+| MLX, Studio, float32 | 1,114 | 0.14 GiB/s | 10.3 GiB | 396 s | 1.1735 |
+| MLX, both Macs over jaccl, float32, batch split 2:1 | 1,800 | 0.23 GiB/s | 8.8 GiB | 239 s | 1.1735 |
 
-- **Speed:** MLX is 1.6x faster than PyTorch on MPS before `mx.compile` and 1.9-2.4x after.
-  Memory use is the same.
-- **Code:** `mlx_train/train.py` (228 lines) covers single-node *and* multi-node training; the
-  PyTorch port `torch_baseline.py` (167 lines) is single-device only. Model definitions are
-  near line-for-line equivalent (`nn.Module`, `nn.Linear`, `nn.MultiHeadAttention`); the PyTorch
-  file written without being executed ran correctly on the first try, which says how close the
-  APIs are.
-- **Ergonomics that differ:** MLX is lazy, so every step needs `mx.eval(params, optimizer state)`
-  or the graph grows unbounded; `mx.compile` requires the step function to be pure in its
-  captured state (we pass the model and optimizer as `inputs`/`outputs`). Going distributed was
-  one line (`nn.average_gradients`) plus `mlx.launch`, with no process-group boilerplate.
-- **Gotchas hit:** `mx.metal.device_info` deprecation (use `mx.device_info`); a Metal
-  "GPU Timeout" error rather than an out-of-memory error when a node is under memory pressure
-  (see Q3); `mlx.launch` reports ssh failures only as "exited with code 255".
+At 1,024 channels (30M parameters, 100 steps): PyTorch 1,026 members/s at 11.1 GiB, MLX 468 members/s
+at 20.6 GiB. PyTorch's rows ran its default bf16-mixed precision, MLX's float32; the two frameworks
+reach the same loss. An MLX bfloat16 TCN run (`--dtype bfloat16`) was not measured.
 
-## 2. What throughput does a single Mac Studio deliver on representative workloads?
+## 2. What does one Mac Studio deliver?
 
-From `single_node.md` (M5 Max, 36 GiB, float32, compiled unless noted):
+Transformers in MLX, Studio alone (`single_node.md`):
 
-| Workload | Global batch | Steps/s | Throughput | Peak memory | compile speedup |
+| Model | Parameters | Batch x 512 tokens | Steps/s | Tokens/s | Peak memory |
 |---|---|---|---|---|---|
-| Transformer 9.8M, seq 512 | 32 | 6.87 | 112,518 tokens/s | 6.1 GiB | 1.17x |
-| Transformer 99.5M, seq 512 | 16 | 2.66 | 21,793 tokens/s | 12.5 GiB | 1.16x |
-| Transformer 510M, seq 512 | 8 | 1.66 | 6,805 tokens/s | 18.3 GiB | 1.28x |
-| CNN 1.0M, 32x32x3 | 128 | 110.8 | 14,180 samples/s | 0.6 GiB | - |
+| 10M | 9.8M | 32 | 9.00 | 147,500 | 6.1 GiB |
+| 100M | 99.5M | 16 | 3.51 | 28,700 | 12.5 GiB |
+| 500M | 510M | 8 | 2.17 | 8,900 | 18.3 GiB |
+| 1B (float32) | 1.06B | 4 | 2.08 | 4,300 | 22.4 GiB |
+| 2B (bfloat16) | 2.05B | 4 | 1.76 | 3,600 | 18.9 GiB |
 
-The 510M float32 model with Adam fits in 18.3 GiB, so the Studio alone trains up to roughly
-800M-1B parameters in float32 before the Metal working set (28 GiB) becomes the limit.
+A 2B-parameter transformer trains on one Studio with half of the GPU's memory to spare; the 1B and
+2B rows are the first ever run in this repo. The Studio is 1.3x the previous 32-core M5 Max at every
+size from 10M to 500M. For the claims workload, PyTorch bf16 on the Studio processes the full 863k
+training members in about 7 minutes per epoch at 512 channels and about 14 minutes at 1,024.
 
-## 3. Does data-parallel training across both Macs give a worthwhile speedup, and at what sizes?
+## 3. Is the second Mac worth it?
 
-**Barely, and only with the batch split to match the two chips' speeds.** From `benchmarks.md`
-(global batch and compile held fixed; speedup is steps/s vs the Studio alone):
+**For data-parallel training of these transformers: no.** Two Macs over RDMA, global batch kept
+equal to the single-Studio run and split evenly (`benchmarks.md`):
 
-| Model | Split (Studio:MacBook) | 1 node | 2 nodes ring | Speedup | Peak mem / node |
-|---|---|---|---|---|---|
-| tf-10m, batch 32 | 16:16 (even) | 6.59-6.87 | 3.80-4.03 | **0.58x** | 3.5 / 3.5 GiB |
-| tf-10m, batch 33 | 22:11 (`rank_batch_weights: [2,1]`) | 6.62 | 5.62 | **0.85x** | 4.6 / 2.9 GiB |
-| tf-10m, batch 32 | 24:8 (`rank_batch_weights: [3,1]`) | 6.56 | 7.03 | **1.07x** | 4.8 / 2.4 GiB |
-| tf-100m, batch 16 | 8:8 (even) | 2.60 | 1.04 | **0.40x** | 7.4 / 7.4 GiB |
-| tf-500m, batch 8 | 4:4 (even) | 1.66 | failed | - | 8.8 GiB at step 0, then Metal GPU timeout |
+| Model | Studio alone | Both Macs, jaccl | Both Macs, ring | Speedup (jaccl) |
+|---|---|---|---|---|
+| 10M | 9.00 steps/s | 8.27 | 7.88 | 0.92x |
+| 100M | 3.51 | 2.90 | 2.50 | 0.83x |
+| 500M | 2.17 | 1.27 | - | 0.59x |
+| 1B | 2.08 | 0.87 | - | 0.42x |
+| 2B | 1.76 | 0.78 | - | 0.45x |
 
-Why:
+Two effects: the MacBook has half the GPU cores, so with an even split it sets the pace; and every
+step averages the full gradient (4 bytes per parameter: 4 GiB at 1B), which at 9.3 GB/s costs about
+as much as the Studio's own compute at these batch sizes. Giving the Studio two thirds of the batch
+(the 510M run with `rank_batch_weights`, batch 12) reaches 7,757 tok/s, still below the Studio's own
+8,892. Data parallelism would need much larger per-step compute than these configs carry (bigger
+batches or sequences, or gradient accumulation between exchanges) before the second Mac helps.
 
-- **The slow node sets the pace.** Per sample the M2 Pro is roughly 3.3x slower than the M5 Max
-  (from the 16:16 run: the laptop needs 0.25 s for 16 sequences, the Studio 0.15 s for 32).
-  With an even split the Studio idles 60% of every step. Weighting the batch toward the Studio
-  recovers it: 0.58x at 1:1, 0.85x at 2:1, 1.07x at 3:1, where the laptop handles a quarter of
-  the batch and neither node waits for the other. The 3:1 run's loss curve still matches the
-  1-node run (1.256 vs 1.246), as expected since the gradient is the batch-weighted mean.
-  The ceiling for this pair is about 1.3x (the laptop adds ~30% more samples per unit time);
-  1.07x is what remains after the all_sum and the slightly uneven step times.
-- **Communication is secondary but not free.** Gradient all_sum per step is 37.5 MiB for the 10M
-  model (~10 ms at 3.7 GB/s, 4% of a step) and 380 MiB for the 100M model (~100 ms, ~25% of a
-  1 s step). RDMA (`jaccl`) would remove most of that, but needs TB5 on both ends.
-- **Memory on the 16 GiB node fails before compute does.** The 500M run needs ~8 GiB of
-  parameters + Adam state per rank plus activations; the laptop went to 7+ GB of swap and the
-  Studio's GPU timed out waiting on it in the first all_sum after step 0 (0.22 steps/s on that
-  step). Data-parallel replicates the whole model on every node, so the smallest node bounds the
-  model size.
-- **Correctness is fine.** The init check confirms identical parameters on both ranks after the
-  rank-0 broadcast, and the 2-node loss curves match the 1-node curves (1.2385 vs 1.2464 at
-  step 199 for tf-10m).
+**For the claims TCN: yes, modestly.** Small gradients (32 MB) and a large batch mean the exchange is
+cheap: 1,800 members/s on both Macs against 1,114 on the Studio alone in MLX, a 1.6x speedup. PyTorch
+cannot span the two Macs at all.
 
-The 100M model was only run with an even split; a 3:1 split would lift it from 0.40x toward
-~1.0x, but its 380 MiB all_sum (~25% of a step) caps it there. Meaningful speedups need a
-near-equal second machine, and for 100M+ models a faster link (`jaccl`).
-
-## The bigger-than-one-Mac proof
-
-`bigger_than_one/proof-20261007-083932.md`: **PASS**, against physical RAM (the strict criterion).
-
-- Decoder-only transformer, d_model 2048, 201 layers split 144 (Studio) / 57 (MacBook),
-  **10.09 billion parameters = 37.6 GiB float32**, more than the Studio's 36 GiB.
-- Resident after build: 26.9 GiB on the Studio, 10.7 GiB on the laptop. Peak during training:
-  28.6 GiB and 11.6 GiB, both within their node's RAM.
-- Forward pass across the link: finite loss 5.688. Four pipeline-parallel SGD steps: 5.688 ->
-  5.309 -> 5.158 -> 5.046.
-- Wall time per step 98-152 s (batch 4 x 256 tokens), dominated by both machines paging: the
-  proof fills each node to 85% of RAM, which leaves macOS itself swapping (5.8 GB on the Studio,
-  8 GB on the laptop during the run). The default 80% fill with 3 GiB layers could *not* exceed
-  36 GiB for this pair; narrower 0.19 GiB layers shrink the per-node update reserve and made the
-  physical-RAM claim reachable with 1.6 GiB to spare.
+**For models that do not fit in one Mac: yes, and that is the headline.** `bigger_than_one/proof-20261008-193659.md`:
+a 16.1-billion-parameter transformer, 60.0 GiB of float32 weights, split 10 layers per Mac, peak
+34.9 GiB on each 48 GB Mac, forward loss finite, loss falling from 5.71 to 5.12 over 8 pipeline-parallel
+SGD steps at 11 to 14 s per step. A 4-step attempt the same evening (`proof-20261008-191243.md`) passed
+every memory check and failed only the "loss decreases" criterion through SGD noise; both reports are kept.
 
 ## Recommendation
 
-- **For training speed: not worth it.** With an M2 Pro as the second node, data-parallel
-  training is slower than the Studio alone at any even split, reaches 1.07x only after tuning
-  `rank_batch_weights` to 3:1 on the 10M model, and fails outright at 500M parameters because
-  the 16 GiB node runs out of memory. A 7% gain does not justify the cable, the second machine
-  and the sleep/ssh fragility. Use the Studio by itself for anything that fits in its memory.
-- **For model size: yes, with caveats.** Pipeline-parallel over the Thunderbolt link lets the
-  pair hold and train a model that does not fit in either Mac (proved at 37.6 GiB / 10B
-  parameters), at minutes per step. That is a capability the Studio alone does not have, useful
-  for correctness checks or very small-batch fine-tuning of large models, not for throughput.
-- **What would change the answer:** a second machine with 32+ GiB and Thunderbolt 5 (enables
-  `jaccl` RDMA and a balanced split). Expect ~1.6-1.8x at 100M-500M parameters in that setup,
-  based on the communication fractions above.
-
-## Open items
-
-- `tf-500m` single-node final loss differs between two otherwise identical runs (1.658 vs
-  1.319 at step 99); the 10M and 100M runs are bit-for-bit repeatable. Worth a look at seeding
-  or compiled-kernel nondeterminism at that size.
-- The 500M 2-node row could be retried with `rank_batch_weights` skewed hard toward the Studio
-  (e.g. `[3,1]`) and `--no-compile` to lower the laptop's peak, but it will still replicate
-  8 GiB of state there.
-- iperf3 raw TCP bandwidth was not measured (`brew install iperf3` on both; the laptop has no
-  Homebrew).
-- The laptop went to sleep mid-matrix once and the link dropped; keep `caffeinate -dis` running
-  on it during cluster runs.
+Train on the Studio alone for anything that fits, which is at least 2B parameters in bfloat16 and the
+claims TCN at 1,024 channels; use MLX for transformers and PyTorch for the TCN (its bf16 path) and for
+recurrent models. Use both Macs only for models larger than one Mac's memory (pipeline parallel over
+RDMA, demonstrated at 60 GiB) or for data-parallel workloads with small gradients and large batches
+such as the TCN. The link is not the problem: ring and jaccl are within 10% of each other here; the
+all-reduce volume and the slower second GPU are.

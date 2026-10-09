@@ -1,0 +1,86 @@
+{
+  "run_id": "tf-1b-jaccl-2n-jaccl-20261008-190742",
+  "name": "tf-1b",
+  "tag": "jaccl",
+  "framework": "mlx",
+  "mlx_version": "0.32.3",
+  "config": {
+    "name": "tf-1b",
+    "model": {
+      "type": "transformer",
+      "n_layers": 24,
+      "d_model": 1920,
+      "n_heads": 16,
+      "d_ff": null,
+      "vocab_size": 256,
+      "seq_len": 512,
+      "n_classes": 10,
+      "image_size": 32,
+      "channels": 3,
+      "width": 32
+    },
+    "data": {
+      "type": "synthetic",
+      "path": null,
+      "n_samples": 65536,
+      "seed": 1234
+    },
+    "global_batch_size": 4,
+    "rank_batch_weights": null,
+    "steps": 60,
+    "warmup_steps": 6,
+    "lr": 0.00015,
+    "min_lr_ratio": 0.1,
+    "weight_decay": 0.1,
+    "grad_clip": 1.0,
+    "compile": true,
+    "dtype": "float32",
+    "seed": 0,
+    "log_every": 1,
+    "skip_first": 5,
+    "log_dir": "results/logs",
+    "benchmarks_file": "results/benchmarks.jsonl",
+    "checkpoint": null,
+    "all_reduce_size": 33554432
+  },
+  "params": 1062760320,
+  "param_bytes": 4251041280,
+  "ranks": 2,
+  "backend": "jaccl",
+  "hosts": [
+    "Clarks-Mac-Studio.local",
+    "Clarks-MBP.localdomain"
+  ],
+  "global_batch_size": 4,
+  "rank_batch_sizes": [
+    2,
+    2
+  ],
+  "seq_len": 512,
+  "compile": true,
+  "dtype": "float32",
+  "steps": 60,
+  "skip_first": 5,
+  "steps_per_sec": 0.8708497166891502,
+  "tokens_per_sec": 1783.5002197793797,
+  "throughput_unit": "tokens",
+  "wall_seconds": 70.56282645800093,
+  "first_loss": 5.724175453186035,
+  "final_loss": 5.056781768798828,
+  "min_loss": 5.056781768798828,
+  "peak_mem_bytes_per_rank": [
+    19050864900,
+    19050881284
+  ],
+  "init_check": {
+    "checksum_seed_init": 93850.8046875,
+    "seed_init_identical_across_ranks": true,
+    "checksums_after_broadcast": [
+      93850.8046875,
+      93850.8046875
+    ],
+    "identical_after_broadcast": true
+  },
+  "log": "results/logs/tf-1b-jaccl-2n-jaccl-20261008-190742.jsonl",
+  "timestamp": "20261008-190742"
+}

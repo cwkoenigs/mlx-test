@@ -1,0 +1,99 @@
+{
+  "verdict": "PASS",
+  "timestamp": "20261008-193659",
+  "backend": "jaccl",
+  "ranks": 2,
+  "criterion": "ram",
+  "fill": 0.8,
+  "model": {
+    "d_model": 8192,
+    "n_heads": 64,
+    "n_layers": 20,
+    "split": [
+      10,
+      10
+    ],
+    "vocab": 256,
+    "dtype": "float32",
+    "batch": 4,
+    "seq_len": 256,
+    "lr": 0.05,
+    "steps": 8
+  },
+  "total_params": 16100171776,
+  "total_param_bytes": 64400687104,
+  "max_usable_bytes": 51539607552,
+  "nodes": [
+    {
+      "rank": 0,
+      "hostname": "Clarks-Mac-Studio.local",
+      "chip": "Apple M5 Max",
+      "ram_bytes": 51539607552,
+      "usable_bytes": 51539607552,
+      "layers": 10,
+      "param_bytes": 32200327168,
+      "param_count": 8050081792,
+      "active_after_build": 32200327184,
+      "rss_after_build": 55296000,
+      "peak_bytes": 37498331180,
+      "rss_peak": 199966720
+    },
+    {
+      "rank": 1,
+      "hostname": "Clarks-MBP.localdomain",
+      "chip": "Apple M5 Pro",
+      "ram_bytes": 51539607552,
+      "usable_bytes": 51539607552,
+      "layers": 10,
+      "param_bytes": 32200359936,
+      "param_count": 8050089984,
+      "active_after_build": 32200359952,
+      "rss_after_build": 54968320,
+      "peak_bytes": 37498363952,
+      "rss_peak": 151846912
+    }
+  ],
+  "checks": [
+    {
+      "ok": true,
+      "what": "model parameters (60.0 GiB, measured) exceed the largest node's ram (48.0 GiB on Clarks-Mac-Studio.local)"
+    },
+    {
+      "ok": true,
+      "what": "Clarks-Mac-Studio.local holds 30.0 GiB of parameters, peak 34.9 GiB, within its 48.0 GiB RAM"
+    },
+    {
+      "ok": true,
+      "what": "Clarks-MBP.localdomain holds 30.0 GiB of parameters, peak 34.9 GiB, within its 48.0 GiB RAM"
+    },
+    {
+      "ok": true,
+      "what": "forward pass across the pipeline gives a finite loss (5.7070)"
+    },
+    {
+      "ok": true,
+      "what": "pipeline-parallel backward + SGD decreases the loss over 8 steps (5.7070 -> 5.1247)"
+    }
+  ],
+  "losses": [
+    5.7069501876831055,
+    5.357102870941162,
+    5.9871673583984375,
+    5.8268537521362305,
+    5.809329032897949,
+    5.545201778411865,
+    5.307944297790527,
+    5.124669551849365
+  ],
+  "step_seconds": [
+    31.989167332998477,
+    24.418602290999843,
+    29.30393025000012,
+    11.326238249999733,
+    10.319609042002412,
+    10.620368916999723,
+    10.529538292001234,
+    11.096616458999051
+  ],
+  "build_seconds": 3.8316685419995338
+}
