@@ -121,7 +121,8 @@ def main(argv: list[str] | None = None) -> int:
     batches = dataset.batches(b, seed=cfg.seed)
     tokens_per_step = cfg.global_batch_size * dataset.tokens_per_sample
     unit = "tokens" if dataset.tokens_per_sample > 1 else "samples"
-    say(f"global batch={cfg.global_batch_size} per-rank batches={batch_sizes} {unit}/step={tokens_per_step}")
+    say(f"global batch={cfg.global_batch_size} per-rank batches={batch_sizes} {unit}/step={tokens_per_step}"
+        + (f" | accumulate {cfg.accumulate_steps} micro-batches per update (effective batch {cfg.global_batch_size * cfg.accumulate_steps}, local losses logged)" if cfg.accumulate_steps > 1 else ""))
 
     # ---- optimizer / step ----------------------------------------------------------------
     warmup = max(1, cfg.warmup_steps)
@@ -138,8 +139,9 @@ def main(argv: list[str] | None = None) -> int:
 
     loss_and_grad = nn.value_and_grad(model, loss_fn)
 
-    def step(x, y):
-        loss, grads = loss_and_grad(model, x, y)
+    accum = max(1, cfg.accumulate_steps)
+
+    def reduce_and_update(grads, loss):
         if size > 1:
             if grad_weight != 1.0:  # weighted average == exact global-batch mean
                 grads = tree_map(lambda g: g * grad_weight, grads)
@@ -151,9 +153,29 @@ def main(argv: list[str] | None = None) -> int:
         optimizer.update(model, grads)
         return loss
 
+    def step(x, y):
+        loss, grads = loss_and_grad(model, x, y)
+        return reduce_and_update(grads, loss)
+
+    def micro_step(x, y, acc):
+        """One micro-batch: local loss and gradients added into the accumulator, no communication."""
+        loss, grads = loss_and_grad(model, x, y)
+        return loss, tree_map(lambda a, g: a + g, acc, grads)
+
+    def update_step(x, y, acc):
+        """The k-th micro-batch: add it, then exchange the mean of the k gradients once and update."""
+        loss, grads = loss_and_grad(model, x, y)
+        acc = tree_map(lambda a, g: (a + g) / accum, acc, grads)
+        return reduce_and_update(acc, loss)
+
+    def zero_acc():
+        return tree_map(lambda p: mx.zeros_like(p), model.trainable_parameters())
+
     state = [model.state, optimizer.state, mx.random.state]
     if cfg.compile:
         step = mx.compile(step, inputs=state, outputs=state)
+        micro_step = mx.compile(micro_step, inputs=state, outputs=state)
+        update_step = mx.compile(update_step, inputs=state, outputs=state)
 
     # ---- loop -----------------------------------------------------------------------------
     ts = time.strftime("%Y%m%d-%H%M%S")
@@ -165,13 +187,22 @@ def main(argv: list[str] | None = None) -> int:
     log_f = open(log_path, "w") if is_main else None
 
     mx.reset_peak_memory()
+    acc = zero_acc() if accum > 1 else None
     step_times, losses = [], []
     t_start = time.perf_counter()
     for s in range(cfg.steps):
         x, y = next(batches)
         t0 = time.perf_counter()
-        loss = step(x, y)
-        mx.eval(state, loss)
+        if accum == 1:
+            loss = step(x, y)
+            mx.eval(state, loss)
+        elif (s + 1) % accum:
+            loss, acc = micro_step(x, y, acc)
+            mx.eval(acc, loss)
+        else:
+            loss = update_step(x, y, acc)
+            mx.eval(state, loss)
+            acc = zero_acc()
         dt = time.perf_counter() - t0
         lv = float(loss.item())
         step_times.append(dt)
@@ -202,6 +233,7 @@ def main(argv: list[str] | None = None) -> int:
         "global_batch_size": cfg.global_batch_size, "rank_batch_sizes": batch_sizes,
         "seq_len": cfg.model.seq_len if cfg.model.type == "transformer" else None,
         "compile": cfg.compile, "dtype": cfg.dtype, "steps": cfg.steps, "skip_first": cfg.skip_first,
+        "accumulate_steps": accum, "optimizer_updates": cfg.steps // accum,
         "steps_per_sec": 1.0 / avg_dt, f"{unit}_per_sec": tokens_per_step / avg_dt, "throughput_unit": unit,
         "wall_seconds": wall, "first_loss": losses[0], "final_loss": losses[-1],
         "min_loss": min(losses), "peak_mem_bytes_per_rank": [r["peak_mem_bytes"] for r in per_rank],

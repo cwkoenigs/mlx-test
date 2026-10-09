@@ -58,6 +58,7 @@ class TrainConfig:
     benchmarks_file: str = "results/benchmarks.jsonl"
     checkpoint: Optional[str] = None
     all_reduce_size: int = 32 * 1024 * 1024
+    accumulate_steps: int = 1  # micro-batches per optimizer update; gradients are exchanged once per update
 
 
 def _from_dict(cls, d: dict, path: str = ""):
