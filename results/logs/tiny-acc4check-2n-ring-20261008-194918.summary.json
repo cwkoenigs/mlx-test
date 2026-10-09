@@ -1,0 +1,89 @@
+{
+  "run_id": "tiny-acc4check-2n-ring-20261008-194918",
+  "name": "tiny",
+  "tag": "acc4check",
+  "framework": "mlx",
+  "mlx_version": "0.32.3",
+  "config": {
+    "name": "tiny",
+    "model": {
+      "type": "transformer",
+      "n_layers": 2,
+      "d_model": 64,
+      "n_heads": 4,
+      "d_ff": null,
+      "vocab_size": 256,
+      "seq_len": 64,
+      "n_classes": 10,
+      "image_size": 32,
+      "channels": 3,
+      "width": 32
+    },
+    "data": {
+      "type": "synthetic",
+      "path": null,
+      "n_samples": 4096,
+      "seed": 1234
+    },
+    "global_batch_size": 8,
+    "rank_batch_weights": null,
+    "steps": 30,
+    "warmup_steps": 3,
+    "lr": 0.001,
+    "min_lr_ratio": 0.1,
+    "weight_decay": 0.1,
+    "grad_clip": 1.0,
+    "compile": true,
+    "dtype": "float32",
+    "seed": 0,
+    "log_every": 10,
+    "skip_first": 3,
+    "log_dir": "results/logs",
+    "benchmarks_file": "results/benchmarks.jsonl",
+    "checkpoint": null,
+    "all_reduce_size": 33554432,
+    "accumulate_steps": 4
+  },
+  "params": 139584,
+  "param_bytes": 558336,
+  "ranks": 2,
+  "backend": "ring",
+  "hosts": [
+    "Clarks-Mac-Studio.local",
+    "Clarks-Mac-Studio.local"
+  ],
+  "global_batch_size": 8,
+  "rank_batch_sizes": [
+    4,
+    4
+  ],
+  "seq_len": 64,
+  "compile": true,
+  "dtype": "float32",
+  "steps": 30,
+  "skip_first": 3,
+  "accumulate_steps": 4,
+  "optimizer_updates": 7,
+  "steps_per_sec": 140.19522714602647,
+  "tokens_per_sec": 71779.95629876555,
+  "throughput_unit": "tokens",
+  "wall_seconds": 0.26285933300096076,
+  "first_loss": 5.708770751953125,
+  "final_loss": 3.2356817722320557,
+  "min_loss": 3.0843591690063477,
+  "peak_mem_bytes_per_rank": [
+    15950740,
+    15950740
+  ],
+  "init_check": {
+    "checksum_seed_init": 327.51922607421875,
+    "seed_init_identical_across_ranks": true,
+    "checksums_after_broadcast": [
+      327.51922607421875,
+      327.51922607421875
+    ],
+    "identical_after_broadcast": true
+  },
+  "log": "results/logs/tiny-acc4check-2n-ring-20261008-194918.jsonl",
+  "timestamp": "20261008-194918"
+}

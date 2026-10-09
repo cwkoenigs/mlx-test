@@ -59,8 +59,8 @@ training members in about 7 minutes per epoch at 512 channels and about 14 minut
 
 ## 3. Is the second Mac worth it?
 
-**For data-parallel training of these transformers: no.** Two Macs over RDMA, global batch kept
-equal to the single-Studio run and split evenly (`benchmarks.md`):
+**For data-parallel training of these transformers with one exchange per batch: no.** Two Macs over
+RDMA, global batch kept equal to the single-Studio run and split evenly (`benchmarks.md`):
 
 | Model | Studio alone | Both Macs, jaccl | Both Macs, ring | Speedup (jaccl) |
 |---|---|---|---|---|
@@ -77,6 +77,23 @@ as much as the Studio's own compute at these batch sizes. Giving the Studio two 
 8,892. Data parallelism would need much larger per-step compute than these configs carry (bigger
 batches or sequences, or gradient accumulation between exchanges) before the second Mac helps.
 
+**With gradient accumulation and a Studio-heavy split: yes, by about 16%.** The exchange cost above
+is per optimizer update, so `accumulate_steps` (added 2026-10-08 evening) sums k micro-batches locally
+and exchanges once. Same effective batch for every row (global batch x k), tokens/s over 96 micro-steps
+(`benchmarks.md`, tags `single-acc8`, `jaccl-acc8`, `jaccl-acc8-w21`, `jaccl-acc16-w21`):
+
+| Model | Studio alone, k=8 | Both, even split, k=8 | Both, split 2:1, k=8 | Both, split 2:1, k=16 |
+|---|---|---|---|---|
+| 500M | 9,240 tok/s | 8,296 (0.90x) | 10,718 (1.16x) | - |
+| 1B | 4,657 | 3,468 (0.74x) | 4,830 (1.04x) | 5,404 (1.16x) |
+| 2B (bf16) | 3,887 | 2,914 (0.75x) | 4,119 (1.06x) | 4,558 (1.17x) |
+
+Both levers are needed: accumulation alone (even split) still loses because the MacBook sets the pace;
+the 2:1 split alone (the 510M row above) still loses to the exchange. Together the second Mac adds
+16-17% at 1B-2B. The ceiling is the MacBook's half-size GPU: ideal would be 1.5x, and the rest is lost
+to the remaining exchange and the lockstep. (With k=16 only 6 optimizer updates happen in 96 micro-steps,
+so those rows' losses barely move; they are throughput measurements.)
+
 **For the claims TCN: yes, modestly.** Small gradients (32 MB) and a large batch mean the exchange is
 cheap: 1,800 members/s on both Macs against 1,114 on the Studio alone in MLX, a 1.6x speedup. PyTorch
 cannot span the two Macs at all.
@@ -91,7 +108,8 @@ every memory check and failed only the "loss decreases" criterion through SGD no
 
 Train on the Studio alone for anything that fits, which is at least 2B parameters in bfloat16 and the
 claims TCN at 1,024 channels; use MLX for transformers and PyTorch for the TCN (its bf16 path) and for
-recurrent models. Use both Macs only for models larger than one Mac's memory (pipeline parallel over
-RDMA, demonstrated at 60 GiB) or for data-parallel workloads with small gradients and large batches
-such as the TCN. The link is not the problem: ring and jaccl are within 10% of each other here; the
+recurrent models. Use both Macs for models larger than one Mac's memory (pipeline parallel over RDMA,
+demonstrated at 60 GiB), for data-parallel workloads with small gradients and large batches such as the
+TCN (1.6x), and for large transformers only with gradient accumulation and a 2:1 batch split (about 1.16x
+at 1B-2B; not worth it below that). The link is not the problem: ring and jaccl are within 10% of each other here; the
 all-reduce volume and the slower second GPU are.

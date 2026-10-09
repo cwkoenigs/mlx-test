@@ -1,0 +1,92 @@
+{
+  "run_id": "tf-2b-jaccl-acc8-w21-2n-jaccl-20261008-195639",
+  "name": "tf-2b",
+  "tag": "jaccl-acc8-w21",
+  "framework": "mlx",
+  "mlx_version": "0.32.3",
+  "config": {
+    "name": "tf-2b",
+    "model": {
+      "type": "transformer",
+      "n_layers": 26,
+      "d_model": 2560,
+      "n_heads": 20,
+      "d_ff": null,
+      "vocab_size": 256,
+      "seq_len": 512,
+      "n_classes": 10,
+      "image_size": 32,
+      "channels": 3,
+      "width": 32
+    },
+    "data": {
+      "type": "synthetic",
+      "path": null,
+      "n_samples": 65536,
+      "seed": 1234
+    },
+    "global_batch_size": 4,
+    "rank_batch_weights": [
+      2,
+      1
+    ],
+    "steps": 96,
+    "warmup_steps": 4,
+    "lr": 0.0001,
+    "min_lr_ratio": 0.1,
+    "weight_decay": 0.1,
+    "grad_clip": 1.0,
+    "compile": true,
+    "dtype": "bfloat16",
+    "seed": 0,
+    "log_every": 1,
+    "skip_first": 5,
+    "log_dir": "results/logs",
+    "benchmarks_file": "results/benchmarks.jsonl",
+    "checkpoint": null,
+    "all_reduce_size": 33554432,
+    "accumulate_steps": 8
+  },
+  "params": 2050429440,
+  "param_bytes": 4100858880,
+  "ranks": 2,
+  "backend": "jaccl",
+  "hosts": [
+    "Clarks-Mac-Studio.local",
+    "Clarks-MBP.localdomain"
+  ],
+  "global_batch_size": 4,
+  "rank_batch_sizes": [
+    3,
+    1
+  ],
+  "seq_len": 512,
+  "compile": true,
+  "dtype": "bfloat16",
+  "steps": 96,
+  "skip_first": 5,
+  "accumulate_steps": 8,
+  "optimizer_updates": 12,
+  "steps_per_sec": 2.011243210464103,
+  "tokens_per_sec": 4119.026095030483,
+  "throughput_unit": "tokens",
+  "wall_seconds": 47.23384933299894,
+  "first_loss": 5.706796169281006,
+  "final_loss": 5.611351013183594,
+  "min_loss": 5.58738899230957,
+  "peak_mem_bytes_per_rank": [
+    22486702328,
+    21837391790
+  ],
+  "init_check": {
+    "checksum_seed_init": 136346.15625,
+    "seed_init_identical_across_ranks": true,
+    "checksums_after_broadcast": [
+      136346.15625,
+      136346.15625
+    ],
+    "identical_after_broadcast": true
+  },
+  "log": "results/logs/tf-2b-jaccl-acc8-w21-2n-jaccl-20261008-195639.jsonl",
+  "timestamp": "20261008-195639"
+}
